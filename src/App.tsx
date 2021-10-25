@@ -1,11 +1,11 @@
-
-
-
+import Navbar from './components/Navbar/Navbar';
+import { LoginPage } from './pages/Login/LoginPage';
 
 function App() {
   return (
-    <div >
-      Hello
+    <div>
+      <Navbar />
+      <LoginPage />
     </div>
   );
 }
