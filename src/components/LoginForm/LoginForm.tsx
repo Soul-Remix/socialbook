@@ -1,7 +1,16 @@
-import { Button, Divider, Link, TextField } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  Link,
+  TextField,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
+import { useCallback, useState } from 'react';
 import * as Yup from 'yup';
+
+import { useStore } from '../../store/store';
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -20,17 +29,49 @@ interface props {
   showRegister: any;
 }
 
+interface loginType {
+  email: string;
+  pass: string;
+}
+
 const LoginForm = ({ showRegister }: props) => {
+  // states for fetching
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const setUser = useStore((state) => state.setUser);
+  const setToken = useStore((state) => state.setToken);
+
+  // formik settings
   const formik = useFormik({
     initialValues: {
       email: '',
       pass: '',
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      handleLogin(values);
     },
     validationSchema: validationSchema,
   });
+
+  const handleLogin = async (values: loginType) => {
+    setLoading(true);
+    const res = await fetch(`http://localhost:8000/auth/login`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    if (res.status !== 200 && res.status !== 201) {
+      setError(data.message);
+      setLoading(false);
+      return;
+    }
+    setUser(data.user);
+    setToken(data.access_token);
+    setLoading(false);
+  };
+
   return (
     <Box
       component="form"
@@ -71,37 +112,42 @@ const LoginForm = ({ showRegister }: props) => {
         error={formik.touched.pass && Boolean(formik.errors.pass)}
         helperText={formik.touched.pass && formik.errors.pass}
       />
-      <Button
-        variant="contained"
-        sx={{ padding: 1, mt: 1, width: '100%' }}
-        type="submit"
-      >
-        Log In
-      </Button>
-      <Link
-        href="#"
-        sx={{
-          display: 'block',
-          margin: 'auto',
-          mt: 2,
-          textDecoration: 'none',
-        }}
-      >
-        Forgot Password?(not Implemented)
-      </Link>
-      <Divider sx={{ mt: 2, mb: 2, width: '100%' }}></Divider>
-      <Button
-        variant="contained"
-        onClick={showRegister}
-        sx={{
-          padding: 2,
-          backgroundColor: 'success.light',
-          width: '100%',
-          ':hover': { backgroundColor: 'success.main' },
-        }}
-      >
-        Create New Account
-      </Button>
+      {!loading && (
+        <>
+          <Button
+            variant="contained"
+            sx={{ padding: 1, mt: 1, width: '100%' }}
+            type="submit"
+          >
+            Log In
+          </Button>
+          <Link
+            href="#"
+            sx={{
+              display: 'block',
+              margin: 'auto',
+              mt: 2,
+              textDecoration: 'none',
+            }}
+          >
+            Forgot Password?(not Implemented)
+          </Link>
+          <Divider sx={{ mt: 2, mb: 2, width: '100%' }}></Divider>
+          <Button
+            variant="contained"
+            onClick={showRegister}
+            sx={{
+              padding: 2,
+              backgroundColor: 'success.light',
+              width: '100%',
+              ':hover': { backgroundColor: 'success.main' },
+            }}
+          >
+            Create New Account
+          </Button>
+        </>
+      )}
+      {loading && <CircularProgress sx={{ mt: 2 }} />}
     </Box>
   );
 };

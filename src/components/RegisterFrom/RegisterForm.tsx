@@ -67,15 +67,13 @@ const RegisterForm = ({ showLogin }: Prop) => {
     },
     validationSchema: validationSchema,
   });
-  // URI
-  const URI: string = 'http://localhost:8000';
 
   // Sign up functions
   const handleSignup = async (values: SignUpValues) => {
     setLoading(true);
     setOpen(false);
     setMessage(null);
-    const res = await fetch(`${URI}/users`, {
+    const res = await fetch(`http://localhost:8000/users`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(values),
