@@ -1,8 +1,18 @@
-import { Button, Divider, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  Divider,
+  Snackbar,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import * as Yup from 'yup';
 
+// yup validation schema
 const validationSchema = Yup.object({
   email: Yup.string()
     .email('Invalid email address')
@@ -28,7 +38,22 @@ interface Prop {
   showLogin: any;
 }
 
+interface SignUpValues {
+  email: string;
+  password: string;
+  confPass: string;
+  firstName: string;
+  lastName: string;
+}
+
 const RegisterForm = ({ showLogin }: Prop) => {
+  // states for fetching
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
+  // open the succes message
+  const [open, setOpen] = useState(false);
+  // formik settings
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -38,10 +63,48 @@ const RegisterForm = ({ showLogin }: Prop) => {
       lastName: '',
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      handleSignup(values);
     },
     validationSchema: validationSchema,
   });
+  // URI
+  const URI: string = 'http://localhost:8000';
+
+  // Sign up functions
+  const handleSignup = async (values: SignUpValues) => {
+    setLoading(true);
+    setOpen(false);
+    setMessage(null);
+    const res = await fetch(`${URI}/users`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    if (res.status !== 200 && res.status !== 201) {
+      setError(data.message);
+      setLoading(false);
+      return;
+    }
+    setMessage(data.message);
+    setLoading(false);
+    setError(null);
+    setOpen(true);
+    setTimeout(() => {
+      showLogin();
+    }, 1000);
+    return;
+  };
+
+  // Close success message
+  const handleClose = (event: any, reason: any) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setMessage(null);
+  };
+
   return (
     <Box
       component="form"
@@ -57,6 +120,11 @@ const RegisterForm = ({ showLogin }: Prop) => {
         maxWidth: '500px',
       }}
     >
+      {error && (
+        <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+          {error}
+        </Alert>
+      )}
       <TextField
         fullWidth
         label="Email"
@@ -134,26 +202,38 @@ const RegisterForm = ({ showLogin }: Prop) => {
         error={formik.touched.confPass && Boolean(formik.errors.confPass)}
         helperText={formik.touched.confPass && formik.errors.confPass}
       />
-      <Button
-        variant="contained"
-        sx={{
-          padding: 2,
-          mt: 2,
-          width: '100%',
-          backgroundColor: 'success.light',
-          ':hover': { backgroundColor: 'success.main' },
-        }}
-        type="submit"
-      >
-        Create Account
-      </Button>
-      <Divider sx={{ mt: 2, mb: 2, width: '100%' }}></Divider>
-      <Typography>
-        Already have an account?{' '}
-        <Button variant="text" onClick={showLogin}>
-          Sign in
-        </Button>
-      </Typography>
+      {loading ? (
+        <CircularProgress sx={{ mt: 2 }} />
+      ) : (
+        <>
+          <Button
+            variant="contained"
+            sx={{
+              padding: 2,
+              mt: 2,
+              width: '100%',
+              backgroundColor: 'success.light',
+              ':hover': { backgroundColor: 'success.main' },
+            }}
+            type="submit"
+          >
+            Create Account
+          </Button>
+          <Divider sx={{ mt: 2, mb: 2, width: '100%' }}></Divider>
+          <Typography>
+            Already have an account?{' '}
+            <Button variant="text" onClick={showLogin}>
+              Sign in
+            </Button>
+          </Typography>
+        </>
+      )}
+
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert severity="success" sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
