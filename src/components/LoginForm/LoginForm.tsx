@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   CircularProgress,
   Divider,
@@ -7,7 +8,7 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import * as Yup from 'yup';
 
 import { useStore } from '../../store/store';
@@ -87,6 +88,11 @@ const LoginForm = ({ showRegister }: props) => {
         maxWidth: '500px',
       }}
     >
+      {error && (
+        <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+          {error}
+        </Alert>
+      )}
       <TextField
         fullWidth
         label="Email"
