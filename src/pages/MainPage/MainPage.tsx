@@ -1,17 +1,6 @@
-import { Chat, Home, Menu, Person } from '@mui/icons-material';
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Paper,
-} from '@mui/material';
-import { Box } from '@mui/system';
+import { SwipeableDrawer } from '@mui/material';
 import { useState } from 'react';
+import DrawerList from '../../components/DrawerList/DrawerList';
 import MobileBottomNav from '../../components/MobileBottomNav/MobileBottomNav';
 
 const MainPage = () => {
@@ -22,6 +11,14 @@ const MainPage = () => {
   };
   return (
     <>
+      <SwipeableDrawer
+        anchor="right"
+        open={showDrawer}
+        onClose={toggleDrawer}
+        onOpen={toggleDrawer}
+      >
+        <DrawerList toggleDrawer={toggleDrawer} />
+      </SwipeableDrawer>
       <MobileBottomNav toggleDrawer={toggleDrawer} />
     </>
   );

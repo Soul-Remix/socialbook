@@ -16,9 +16,11 @@ interface StoreState extends State {
   user: null | userInterface;
   token: null | string;
   expiry: number | null;
+  navValue: string;
   setUser: (data: any) => void;
   setToken: (data: any) => void;
   logOut: () => void;
+  setNavValue: (value: string) => void;
 }
 
 export const useStore = create<StoreState>(
@@ -27,9 +29,11 @@ export const useStore = create<StoreState>(
       user: null,
       token: null,
       expiry: null,
+      navValue: 'home',
       setUser: (data: any) =>
         set({ user: { ...data }, expiry: Date.now() + 172800000 }),
       setToken: (data: string) => set({ token: data }),
+      setNavValue: (value: string) => set({ navValue: value }),
       logOut: () => {
         set({ user: null, token: null, expiry: null });
       },
