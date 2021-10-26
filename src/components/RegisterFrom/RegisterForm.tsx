@@ -110,7 +110,7 @@ const RegisterForm = ({ showLogin }: Prop) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        '& .MuiTextField-root': { m: 1, width: '100%' },
+        '& .MuiTextField-root': { mt: 1, mb: 1, width: '100%' },
         padding: 2,
         flexGrow: 1,
         alignItems: 'center',
@@ -138,13 +138,8 @@ const RegisterForm = ({ showLogin }: Prop) => {
       <Box
         sx={{
           display: { sm: 'flex' },
-          '& .first': {
-            ml: '0',
-          },
-          '& .last': {
-            mr: '0',
-            ml: { xs: '0', md: '8' },
-          },
+          width: '100%',
+          '& .first': { mr: 1 },
         }}
       >
         <TextField
@@ -164,7 +159,6 @@ const RegisterForm = ({ showLogin }: Prop) => {
           fullWidth
           label="Last Name"
           id="lastName"
-          className="last"
           name="lastName"
           required
           value={formik.values.lastName}
