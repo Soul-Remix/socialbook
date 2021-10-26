@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 import { State } from 'zustand';
+import { createTrackedSelector } from 'react-tracked';
 
 interface userInterface {
   id: number;
@@ -35,7 +36,7 @@ export const useStore = create<StoreState>(
       setToken: (data: string) => set({ token: data }),
       setNavValue: (value: string) => set({ navValue: value }),
       logOut: () => {
-        set({ user: null, token: null, expiry: null });
+        set({ user: null, token: null, expiry: null, navValue: 'home' });
       },
     }),
     {
@@ -44,3 +45,5 @@ export const useStore = create<StoreState>(
     }
   )
 );
+
+export const useTrackedStore = createTrackedSelector(useStore);

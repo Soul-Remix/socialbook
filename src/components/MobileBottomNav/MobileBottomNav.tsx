@@ -6,15 +6,14 @@ import {
   Paper,
 } from '@mui/material';
 import { useHistory } from 'react-router';
-import { useStore } from '../../store/store';
+import { useTrackedStore } from '../../store/store';
 
 interface Prop {
   toggleDrawer: any;
 }
 
 const MobileBottomNav = ({ toggleDrawer }: Prop) => {
-  const value = useStore((state) => state.navValue);
-  const setValue = useStore((state) => state.setNavValue);
+  const state = useTrackedStore();
   const history = useHistory();
   return (
     <Paper
@@ -28,9 +27,9 @@ const MobileBottomNav = ({ toggleDrawer }: Prop) => {
       elevation={3}
     >
       <BottomNavigation
-        value={value}
+        value={state.navValue}
         onChange={(event, newValue) => {
-          setValue(newValue);
+          state.setNavValue(newValue);
         }}
       >
         <BottomNavigationAction
@@ -55,7 +54,11 @@ const MobileBottomNav = ({ toggleDrawer }: Prop) => {
           label="Friends"
           value="requests"
           icon={
-            <Badge badgeContent={2} color="primary" variant="dot">
+            <Badge
+              badgeContent={state.user?.friendReq}
+              color="primary"
+              variant="dot"
+            >
               <People />
             </Badge>
           }

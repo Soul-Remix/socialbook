@@ -5,7 +5,6 @@ import {
   Home,
   Logout,
   ManageAccounts,
-  People,
   PersonAdd,
   Settings,
 } from '@mui/icons-material';
@@ -22,26 +21,26 @@ import {
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useStore } from '../../store/store';
+import { useTrackedStore } from '../../store/store';
 
 interface Prop {
   toggleDrawer: any;
 }
 
 const DrawerList = ({ toggleDrawer }: Prop) => {
-  const setValue = useStore((state) => state.setNavValue);
+  const state = useTrackedStore();
   const history = useHistory();
 
-  const [open, setOpen] = useState(false);
+  const [openNestedList, setOpenNestedList] = useState(false);
 
   const handleClick = (target: string) => {
     toggleDrawer();
     history.push(`/${target}`);
-    setValue(target);
+    state.setNavValue(target);
   };
 
   const handleCollapse = () => {
-    setOpen(!open);
+    setOpenNestedList(!openNestedList);
   };
   return (
     <Box sx={{ width: 250 }} role="presentation">
@@ -91,11 +90,14 @@ const DrawerList = ({ toggleDrawer }: Prop) => {
             <Settings />
           </ListItemIcon>
           <ListItemText primary="Settings" />
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {openNestedList ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse in={openNestedList} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              onClick={() => handleClick('profile/settings')}
+            >
               <ListItemIcon sx={{ minWidth: '40px' }}>
                 <ManageAccounts />
               </ListItemIcon>
@@ -103,7 +105,10 @@ const DrawerList = ({ toggleDrawer }: Prop) => {
             </ListItemButton>
           </List>
         </Collapse>
-        <ListItemButton sx={{ ':hover': { color: 'error.main' } }}>
+        <ListItemButton
+          sx={{ ':hover': { color: 'error.main' } }}
+          onClick={state.logOut}
+        >
           <ListItemIcon sx={{ minWidth: '40px', color: 'inherit' }}>
             <Logout />
           </ListItemIcon>
