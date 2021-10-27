@@ -14,7 +14,7 @@ interface userInterface {
 }
 
 interface StoreState extends State {
-  user: null | userInterface;
+  user: any;
   token: any;
   expiry: number | null;
   navValue: string;
