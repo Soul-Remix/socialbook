@@ -2,7 +2,7 @@ import { Skeleton } from '@mui/material';
 import { Box } from '@mui/system';
 
 const PostSkeletion = () => {
-  return arr.map((x: any) => {
+  return arr.map((x: number) => {
     return (
       <Box sx={{ mb: 4 }} key={x}>
         <Box sx={{ display: 'flex', gap: '15px', mb: 1 }}>
@@ -17,4 +17,4 @@ const PostSkeletion = () => {
 
 export default PostSkeletion;
 
-const arr: any = [1, 2, 3];
+const arr = [1, 2, 3];
