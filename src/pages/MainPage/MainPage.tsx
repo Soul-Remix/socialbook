@@ -1,7 +1,6 @@
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import Feed from '../../components/Feed/Feed';
-import LoginNavbar from '../../components/LoginNavbar/LoginNavbar';
 import MobileBottomNav from '../../components/MobileBottomNav/MobileBottomNav';
 import MobileDrawer from '../../components/MobileDrawer/MobileDrawer';
 import NavBar from '../../components/NavBar/NavBar';
@@ -17,7 +16,7 @@ const MainPage = () => {
   return (
     <>
       <NavBar />
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <MobileDrawer toggleDrawer={toggleDrawer} showDrawer={showDrawer} />
         <PcDrawer />
         <Feed />

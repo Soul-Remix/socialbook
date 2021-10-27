@@ -12,9 +12,9 @@ const PcDrawer = () => {
       variant="permanent"
       anchor="left"
       sx={{
-        width: '250px',
+        width: '260px',
         [`& .MuiDrawer-paper`]: {
-          width: '250px',
+          width: '260px',
           flexShrink: 0,
           boxSizing: 'border-box',
         },
