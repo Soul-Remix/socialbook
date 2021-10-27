@@ -11,7 +11,7 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
-import { useStore } from '../../store/store';
+import { useTrackedStore } from '../../store/store';
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -40,8 +40,7 @@ const LoginForm = ({ showRegister }: props) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const setUser = useStore((state) => state.setUser);
-  const setToken = useStore((state) => state.setToken);
+  let state = useTrackedStore();
 
   // formik settings
   const formik = useFormik({
@@ -68,9 +67,10 @@ const LoginForm = ({ showRegister }: props) => {
       setLoading(false);
       return;
     }
-    setUser(data.user);
-    setToken(data.access_token);
     setLoading(false);
+    await state.setUser(data.user);
+    await state.setToken(data.access_token);
+    return;
   };
 
   return (

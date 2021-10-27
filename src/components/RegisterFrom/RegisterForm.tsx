@@ -73,6 +73,7 @@ const RegisterForm = ({ showLogin }: Prop) => {
     setLoading(true);
     setOpen(false);
     setMessage(null);
+
     const res = await fetch(`http://localhost:8000/users`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },

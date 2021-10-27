@@ -53,11 +53,13 @@ const DrawerList = ({ toggleDrawer }: Prop) => {
         >
           <ListItemIcon>
             <Avatar
-              alt="Remy Sharp"
-              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.PApKAQbe2m90haOqcwFAJgHaE8%26pid%3DApi&f=1"
+              alt={state.user.firstName}
+              src={state.user.profilePicture}
             />
           </ListItemIcon>
-          <ListItemText primary="Person" />
+          <ListItemText
+            primary={`${state.user.firstName} ${state.user.lastName}`}
+          />
         </ListItem>
       </List>
       <Divider />

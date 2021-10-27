@@ -16,10 +16,13 @@ function App() {
     return;
   }, [state]);
 
-  if (!state.user) {
+  if (!state.user && !state.token) {
     return <LoginPage />;
-  } else {
+  }
+  if (state.user && state.token) {
     return <MainPage />;
+  } else {
+    return null;
   }
 }
 
