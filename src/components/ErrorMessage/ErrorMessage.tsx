@@ -1,9 +1,5 @@
-import { Alert, Button } from '@mui/material';
+import { Alert } from '@mui/material';
 import { Box } from '@mui/system';
-
-function isErrorType(error: unknown): error is Error {
-  return error instanceof Error;
-}
 
 const ErrorMessage = ({ message }: any) => {
   if (Array.isArray(message)) {

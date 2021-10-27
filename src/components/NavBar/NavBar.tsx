@@ -2,26 +2,11 @@ import {
   AppBar,
   CssBaseline,
   InputBase,
-  Slide,
   Toolbar,
   Typography,
-  useScrollTrigger,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
-
-function HideOnScroll(props: any) {
-  const { children, window } = props;
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -69,29 +54,27 @@ const NavBar = (props: any) => {
   return (
     <>
       <CssBaseline />
-      <HideOnScroll {...props}>
-        <AppBar sx={{ zIndex: 1500 }}>
-          <Toolbar>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-            >
-              Socialbook
-            </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
-          </Toolbar>
-        </AppBar>
-      </HideOnScroll>
+      <AppBar sx={{ zIndex: 1500 }}>
+        <Toolbar>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            Socialbook
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
+        </Toolbar>
+      </AppBar>
       <Toolbar />
     </>
   );

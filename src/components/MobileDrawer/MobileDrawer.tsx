@@ -1,20 +1,17 @@
 import { SwipeableDrawer } from '@mui/material';
+import { useTrackedStore } from '../../store/store';
 import DrawerList from '../DrawerList/DrawerList';
 
-interface Prop {
-  toggleDrawer: any;
-  showDrawer: boolean;
-}
-
-const MobileDrawer = ({ showDrawer, toggleDrawer }: Prop) => {
+const MobileDrawer = () => {
+  const state = useTrackedStore();
   return (
     <SwipeableDrawer
       anchor="right"
-      open={showDrawer}
-      onClose={toggleDrawer}
-      onOpen={toggleDrawer}
+      open={state.showDrawer}
+      onClose={state.toggleDrawer}
+      onOpen={state.toggleDrawer}
     >
-      <DrawerList toggleDrawer={toggleDrawer} />
+      <DrawerList toggleDrawer={state.toggleDrawer} />
     </SwipeableDrawer>
   );
 };

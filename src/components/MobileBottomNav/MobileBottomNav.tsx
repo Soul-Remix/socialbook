@@ -8,11 +8,7 @@ import {
 import { useHistory } from 'react-router';
 import { useTrackedStore } from '../../store/store';
 
-interface Prop {
-  toggleDrawer: any;
-}
-
-const MobileBottomNav = ({ toggleDrawer }: Prop) => {
+const MobileBottomNav = () => {
   const state = useTrackedStore();
   const history = useHistory();
   return (
@@ -68,7 +64,7 @@ const MobileBottomNav = ({ toggleDrawer }: Prop) => {
           label="Settings"
           value="settings"
           icon={<Menu />}
-          onClick={toggleDrawer}
+          onClick={() => state.toggleDrawer()}
         />
       </BottomNavigation>
     </Paper>

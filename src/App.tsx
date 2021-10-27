@@ -1,4 +1,7 @@
 import { useEffect } from 'react';
+import { Redirect, Route } from 'react-router';
+import MobileDrawer from './components/MobileDrawer/MobileDrawer';
+import NavBar from './components/NavBar/NavBar';
 import { LoginPage } from './pages/Login/LoginPage';
 import MainPage from './pages/MainPage/MainPage';
 import { useTrackedStore } from './store/store';
@@ -20,7 +23,18 @@ function App() {
     return <LoginPage />;
   }
   if (state.user && state.token) {
-    return <MainPage />;
+    return (
+      <>
+        <NavBar />
+        <MobileDrawer />
+        <Route path="/" exact>
+          <Redirect to="/home" />
+        </Route>
+        <Route path="/home" exact>
+          <MainPage />
+        </Route>
+      </>
+    );
   } else {
     return null;
   }
