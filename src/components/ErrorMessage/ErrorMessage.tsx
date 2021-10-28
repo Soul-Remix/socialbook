@@ -6,12 +6,20 @@ const ErrorMessage = ({ message }: any) => {
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         {message.map((x) => {
-          return <Alert severity="error">{x.message}</Alert>;
+          return (
+            <Alert severity="error" sx={{ mb: 4 }}>
+              {x.message}
+            </Alert>
+          );
         })}
       </Box>
     );
   }
-  return <Alert severity="error">{message.message}</Alert>;
+  return (
+    <Alert severity="error" sx={{ mb: 4 }}>
+      {message.message}
+    </Alert>
+  );
 };
 
 export default ErrorMessage;

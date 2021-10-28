@@ -100,7 +100,7 @@ const DrawerList = ({ toggleDrawer }: Prop) => {
           <List component="div" disablePadding>
             <ListItemButton
               sx={{ pl: 4 }}
-              onClick={() => handleClick('profile/settings')}
+              onClick={() => handleClick('settings')}
             >
               <ListItemIcon sx={{ minWidth: '40px' }}>
                 <ManageAccounts />

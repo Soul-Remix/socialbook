@@ -43,6 +43,7 @@ function App() {
           <Route path="/profile/:id" exact>
             <ProfilePage />
           </Route>
+          <Route path="/settings" exact></Route>
           <RightSidebar />
           <MobileBottomNav />
         </Box>
