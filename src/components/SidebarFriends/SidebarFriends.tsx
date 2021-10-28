@@ -62,7 +62,6 @@ const SidebarFriends = () => {
     if (res.status !== 200 && res.status !== 201) {
       throw new Error(data.message);
     }
-    console.log(data);
     return data;
   };
 
@@ -83,7 +82,7 @@ const SidebarFriends = () => {
               <ListItem
                 button
                 key={f.id}
-                onClick={() => history.push(`/user/${f.id}`)}
+                onClick={() => history.push(`/profile/${f.id}`)}
               >
                 <ListItemIcon>
                   {f.isOnline ? (

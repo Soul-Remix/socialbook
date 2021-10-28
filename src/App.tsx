@@ -1,9 +1,14 @@
+import { Box } from '@mui/system';
 import { useEffect } from 'react';
 import { Redirect, Route } from 'react-router';
+import MobileBottomNav from './components/MobileBottomNav/MobileBottomNav';
 import MobileDrawer from './components/MobileDrawer/MobileDrawer';
 import NavBar from './components/NavBar/NavBar';
+import PcDrawer from './components/PcDrawer/PcDrawer';
+import RightSidebar from './components/RightSidebar/RightSidebar';
 import { LoginPage } from './pages/Login/LoginPage';
 import MainPage from './pages/MainPage/MainPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { useTrackedStore } from './store/store';
 
 function App() {
@@ -27,12 +32,20 @@ function App() {
       <>
         <NavBar />
         <MobileDrawer />
-        <Route path="/" exact>
-          <Redirect to="/home" />
-        </Route>
-        <Route path="/home" exact>
-          <MainPage />
-        </Route>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <PcDrawer />
+          <Route path="/" exact>
+            <Redirect to="/home" />
+          </Route>
+          <Route path="/home" exact>
+            <MainPage />
+          </Route>
+          <Route path="/profile/:id" exact>
+            <ProfilePage />
+          </Route>
+          <RightSidebar />
+          <MobileBottomNav />
+        </Box>
       </>
     );
   } else {

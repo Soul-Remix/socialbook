@@ -38,7 +38,7 @@ const MobileBottomNav = () => {
           label="Profile"
           value="profile"
           icon={<Person />}
-          onClick={() => history.push('/profile')}
+          onClick={() => history.push(`/profile/${state.user.id}`)}
         />
         <BottomNavigationAction
           label="Chat"

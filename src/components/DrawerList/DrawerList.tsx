@@ -48,7 +48,9 @@ const DrawerList = ({ toggleDrawer }: Prop) => {
         <ListItem
           button
           onClick={() => {
-            handleClick('profile');
+            toggleDrawer();
+            history.push(`/profile/${state.user.id}`);
+            state.setNavValue('profile');
           }}
         >
           <ListItemIcon>

@@ -1,14 +1,4 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from '@mui/material';
+import { Drawer } from '@mui/material';
 import { Box } from '@mui/system';
 import SidebarFriends from '../SidebarFriends/SidebarFriends';
 import SidebarOnlineFriends from '../SidebarOnlineFriends/SidebarOnlineFriends';
@@ -19,7 +9,7 @@ const RightSidebar = () => {
       variant="permanent"
       anchor="right"
       sx={{
-        width: '260px',
+        width: '270px',
         [`& .MuiDrawer-paper`]: {
           width: '280px',
           flexShrink: 0,
@@ -28,7 +18,7 @@ const RightSidebar = () => {
         display: { xs: 'none', lg: 'block' },
       }}
     >
-      <Box sx={{ width: 280, mt: '65px' }} role="presentation">
+      <Box sx={{ width: 270, mt: '65px' }} role="presentation">
         <SidebarOnlineFriends />
         <SidebarFriends />
       </Box>

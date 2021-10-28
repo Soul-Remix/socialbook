@@ -35,7 +35,7 @@ export const useStore = create<StoreState>(
       showDrawer: false,
       navValue: 'home',
       setUser: (data: any) =>
-        set({ user: { ...data }, expiry: Date.now() + 172800000 }),
+        set({ user: { ...data }, expiry: Date.now() + 86400000 }),
       setToken: (data: string) => set({ token: data }),
       setNavValue: (value: string) => set({ navValue: value }),
       toggleDrawer: () => set({ showDrawer: !get().showDrawer }),
