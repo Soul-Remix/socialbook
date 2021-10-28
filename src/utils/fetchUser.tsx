@@ -6,6 +6,7 @@ const fetchUser = async (token: string, id: number, logOut: any) => {
       Authorization: `Bearer ${token}`,
     },
   });
+
   const data = await res.json();
   if (res.status === 401) {
     logOut();

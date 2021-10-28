@@ -6,7 +6,7 @@ import useIntersectionObserver from '../../hooks/useInterSectionObserver';
 import { useTrackedStore } from '../../store/store';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import PostCard from '../PostCard/PostCard';
-import PostSkeletion from '../PostSkeletion/PostSkeletion';
+import PostSkeleton from '../PostSkeleton/PostSkeleton';
 
 const Feed = () => {
   const state = useTrackedStore();
@@ -68,7 +68,7 @@ const Feed = () => {
           });
         })}
       {isError && <ErrorMessage message={error} />}
-      {isLoading && <PostSkeletion />}
+      {isLoading && <PostSkeleton />}
       <Box ref={loadMoreRef} sx={{ textAlign: 'center' }}>
         {isFetchingNextPage ? 'Loading more...' : ''}
       </Box>

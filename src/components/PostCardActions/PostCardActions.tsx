@@ -117,7 +117,7 @@ const PostCardActions = ({ id, likes, comments }: Prop) => {
             >
               <Favorite sx={{ color: 'primary.main' }} />
               <Typography sx={{ ml: 1, color: 'primary.main' }}>
-                UnLike
+                Like
               </Typography>
             </IconButton>
           )

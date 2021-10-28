@@ -1,7 +1,7 @@
 import { Skeleton } from '@mui/material';
 import { Box } from '@mui/system';
 
-const PostSkeletion = () => {
+const PostSkeleton = () => {
   return (
     <>
       {arr.map((x: number) => {
@@ -19,6 +19,6 @@ const PostSkeletion = () => {
   );
 };
 
-export default PostSkeletion;
+export default PostSkeleton;
 
 const arr = [1, 2, 3];

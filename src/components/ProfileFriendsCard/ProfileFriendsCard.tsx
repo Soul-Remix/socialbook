@@ -13,7 +13,7 @@ const ProfileFriendsCard = (props: any) => {
   const { friends } = props;
   const history = useHistory();
   return (
-    <Card sx={{ width: '100%', maxWidth: '700px', mb: 10 }} raised>
+    <Card sx={{ width: '100%', maxWidth: '700px', mb: 5 }} raised>
       <CardHeader
         title="Friends"
         subheader={friends.length}
@@ -35,6 +35,7 @@ const ProfileFriendsCard = (props: any) => {
                   flexDirection: 'column',
                   textTransform: 'initial',
                   mb: 0.4,
+                  height: '150px',
                 }}
                 onClick={() => history.push(`/profile/${x.id}`)}
                 key={x.id}
@@ -43,10 +44,9 @@ const ProfileFriendsCard = (props: any) => {
                   src={x.profilePicture}
                   sx={{
                     width: '100%',
-                    height: '80%',
+                    height: '60%',
                     borderRadius: 1,
                     maxWidth: '100px',
-                    maxHeight: '100px',
                   }}
                 />
                 <Typography>{`${x.firstName} ${x.lastName}`}</Typography>
