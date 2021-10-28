@@ -86,7 +86,7 @@ const ProfilePage = () => {
       {PostsQuery.data && PostsQuery.data.length > 0 && (
         <Box sx={{ width: '100%', maxWidth: '800px' }}>
           {PostsQuery.data.map((x: any) => {
-            return <PostCard post={x} />;
+            return <PostCard post={x} key={x.id} />;
           })}
         </Box>
       )}
