@@ -1,18 +1,29 @@
-import {
-  CircularProgress,
-  Container,
-  Tab,
-  Tabs,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Container, Tab, Tabs, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import AccountSettingsForm from '../../components/AccountSettingsForm/AccountSettingsForm';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import ProfileSettingsForm from '../../components/ProfileSettingsForm/ProfileSettingsForm';
+import SettingsFormSkeleton from '../../components/SettingsFormSkeleton/SettingsFormSkeleton';
 import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
+
+function TabPanel(props: any) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`settings-tabpanel-${index}`}
+      aria-labelledby={`settings-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+}
 
 const SettingsPage = () => {
   const [value, setValue] = useState(0);
@@ -54,28 +65,14 @@ const SettingsPage = () => {
       </Box>
       <TabPanel value={value} index={0}>
         {data && <ProfileSettingsForm profile={data.extendedProfile} />}
-        {isLoading && <CircularProgress />}
+        {isLoading && <SettingsFormSkeleton />}
         {isError && <ErrorMessage message={error} />}
       </TabPanel>
-      <TabPanel value={value} index={1}></TabPanel>
+      <TabPanel value={value} index={1}>
+        {data && <AccountSettingsForm user={data} />}
+      </TabPanel>
     </Container>
   );
 };
 
 export default SettingsPage;
-
-function TabPanel(props: any) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && children}
-    </div>
-  );
-}

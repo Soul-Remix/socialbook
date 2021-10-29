@@ -21,6 +21,7 @@ interface StoreState extends State {
   showDrawer: boolean;
   setUser: (data: any) => void;
   setToken: (data: any) => void;
+  setExpiry: () => void;
   logOut: () => void;
   setNavValue: (value: string) => void;
   toggleDrawer: () => void;
@@ -34,8 +35,8 @@ export const useStore = create<StoreState>(
       expiry: null,
       showDrawer: false,
       navValue: 'home',
-      setUser: (data: any) =>
-        set({ user: { ...data }, expiry: Date.now() + 86400000 }),
+      setUser: (data: any) => set({ user: { ...data } }),
+      setExpiry: () => set({ expiry: Date.now() + 86400000 }),
       setToken: (data: string) => set({ token: data }),
       setNavValue: (value: string) => set({ navValue: value }),
       toggleDrawer: () => set({ showDrawer: !get().showDrawer }),

@@ -68,8 +68,9 @@ const LoginForm = ({ showRegister }: props) => {
       return;
     }
     setLoading(false);
-    await state.setUser(data.user);
-    await state.setToken(data.access_token);
+    state.setUser(data.user);
+    state.setExpiry();
+    state.setToken(data.access_token);
     return;
   };
 
