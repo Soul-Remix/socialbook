@@ -21,13 +21,20 @@ import { useTrackedStore } from '../../store/store';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const validationSchema = Yup.object({
-  bio: Yup.string().max(50, 'bio should be less than 50 character').trim(),
+  bio: Yup.string()
+    .max(50, 'bio should be less than 50 character')
+    .trim()
+    .nullable(),
   country: Yup.string()
     .max(25, 'country should be less than 25 character')
-    .trim(),
-  livesIn: Yup.string().max(25, 'should be less than 25 character').trim(),
+    .trim()
+    .nullable(),
+  livesIn: Yup.string()
+    .max(25, 'should be less than 25 character')
+    .trim()
+    .nullable(),
   gender: Yup.string().oneOf(['male', 'female', 'other']),
-  birthDate: Yup.date(),
+  birthDate: Yup.date().nullable(),
 });
 
 const ProfileSettingsForm = (props: any) => {
@@ -122,6 +129,7 @@ const ProfileSettingsForm = (props: any) => {
           label="Country"
           id="country"
           name="country"
+          value={formik.values.country}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.country && Boolean(formik.errors.country)}
@@ -131,6 +139,7 @@ const ProfileSettingsForm = (props: any) => {
           label="Lives In"
           id="livesIn"
           name="livesIn"
+          value={formik.values.livesIn}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.livesIn && Boolean(formik.errors.livesIn)}

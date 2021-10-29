@@ -17,18 +17,16 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 const validationSchema = Yup.object({
   email: Yup.string()
     .email('Invalid email address')
-
+    .required('Email is required')
     .lowercase()
     .trim(),
-  firstName: Yup.string().matches(
-    /[a-zA-Z]/,
-    'First name can only contain Latin letters.'
-  ),
+  firstName: Yup.string()
+    .required('First Name is required')
+    .matches(/[a-zA-Z]/, 'First name can only contain Latin letters.'),
 
-  lastName: Yup.string().matches(
-    /[a-zA-Z]/,
-    'Last name can only contain Latin letters.'
-  ),
+  lastName: Yup.string()
+    .required('Last Name is required')
+    .matches(/[a-zA-Z]/, 'Last name can only contain Latin letters.'),
 });
 
 const AccountSettingsForm = ({ user }: any) => {

@@ -1,41 +1,50 @@
 import { PhotoCamera } from '@mui/icons-material';
 import { Avatar, Badge, Button, Divider, Typography } from '@mui/material';
+import { useState } from 'react';
 import { useTrackedStore } from '../../store/store';
+import PFDialog from '../PFDialog/PFDialog';
 
 interface Props {
   id: number;
   userName: string;
-  image: string;
+  profilePicture: string;
   bio: string | null;
 }
 
-const ProfileAvatar = ({ id, userName, image, bio }: Props) => {
+const ProfileAvatar = ({ id, userName, profilePicture, bio }: Props) => {
   const state = useTrackedStore();
+  const [open, setOpen] = useState(false);
   return (
     <>
       {state.user.id === id && (
-        <Badge
-          overlap="circular"
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          badgeContent={
-            <Button sx={{ color: 'text.secondary' }}>
-              <PhotoCamera />
-            </Button>
-          }
-        >
-          <Avatar
-            src={image}
-            sx={{
-              width: { xs: '150px', sm: '200px', md: '225px' },
-              height: { xs: '150px', sm: '200px', md: '225px' },
-              mb: 3,
-            }}
-          />
-        </Badge>
+        <>
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            badgeContent={
+              <Button
+                sx={{ color: 'text.secondary' }}
+                onClick={() => setOpen(true)}
+              >
+                <PhotoCamera />
+              </Button>
+            }
+          >
+            <Avatar
+              src={state.user.profilePicture}
+              sx={{
+                width: { xs: '150px', sm: '200px', md: '225px' },
+                height: { xs: '150px', sm: '200px', md: '225px' },
+                mb: 3,
+              }}
+            />
+          </Badge>
+          <PFDialog open={open} setOpen={setOpen} />
+        </>
       )}
       {state.user.id !== id && (
         <Avatar
-          src={image}
+          src={profilePicture}
           sx={{
             width: { xs: '150px', sm: '200px', md: '225px' },
             height: { xs: '150px', sm: '200px', md: '225px' },

@@ -60,7 +60,7 @@ const Feed = () => {
   });
 
   return (
-    <Container sx={{ padding: 4, mr: { sm: 6, md: 8 }, ml: { sm: 6, md: 8 } }}>
+    <>
       {data &&
         data.pages.map((page) => {
           return page.posts.map((x: any) => {
@@ -72,7 +72,7 @@ const Feed = () => {
       <Box ref={loadMoreRef} sx={{ textAlign: 'center' }}>
         {isFetchingNextPage ? 'Loading more...' : ''}
       </Box>
-    </Container>
+    </>
   );
 };
 

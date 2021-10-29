@@ -63,7 +63,7 @@ const ProfilePage = () => {
           <ProfileAvatar
             id={userQuery.data.id}
             userName={`${userQuery.data.firstName} ${userQuery.data.lastName}`}
-            image={userQuery.data.image}
+            profilePicture={userQuery.data.profilePicture}
             bio={userQuery.data.extendedProfile.bio}
           />
           <ProfileInfo profile={userQuery.data.extendedProfile} />

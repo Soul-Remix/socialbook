@@ -13,7 +13,7 @@ interface Props {
 }
 
 const ProfileInfo = (props: Props) => {
-  const { country, city, birthDate, livesIn, gender } = props.profile;
+  const { country, birthDate, livesIn, gender } = props.profile;
   return (
     <>
       <Box
