@@ -16,6 +16,7 @@ import { useState } from 'react';
 
 import { useTrackedStore } from '../../store/store';
 import PostCardActions from '../PostCardActions/PostCardActions';
+import PostDeleteDialog from '../PostDeleteDialog/PostDeleteDialog';
 import PostUpdateDialog from '../PostUpdateDialog/PostUpdateDialog';
 
 dayjs.extend(relativeTime);
@@ -55,7 +56,8 @@ const PostCard = (props: any) => {
     sameUser = state.user.id === post.author.id;
   }
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const openMenu = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -100,22 +102,33 @@ const PostCard = (props: any) => {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
               >
                 <MenuItem
-                  onClick={() => setOpenDialog(true)}
+                  onClick={() => {
+                    setOpenUpdateDialog(true);
+                    handleClose();
+                  }}
                   sx={{ ':hover': { color: 'success.main' } }}
                 >
                   Edit
                 </MenuItem>
                 <MenuItem
-                  onClick={handleClose}
+                  onClick={() => {
+                    setOpenDeleteDialog(true);
+                    handleClose();
+                  }}
                   sx={{ ':hover': { color: 'error.main' } }}
                 >
                   Delete
                 </MenuItem>
               </Menu>
               <PostUpdateDialog
-                open={openDialog}
-                setOpen={setOpenDialog}
+                open={openUpdateDialog}
+                setOpen={setOpenUpdateDialog}
                 post={post}
+              />
+              <PostDeleteDialog
+                open={openDeleteDialog}
+                setOpen={setOpenDeleteDialog}
+                id={post.id}
               />
             </>
           )
