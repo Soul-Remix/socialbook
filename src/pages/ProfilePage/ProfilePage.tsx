@@ -26,7 +26,7 @@ const ProfilePage = () => {
   const friendsQuery = useQuery(`friends${id}`, () =>
     fetchFriends(state.token, id, state.logOut)
   );
-  const PostsQuery = useQuery(`${id}`, async () => {
+  const PostsQuery = useQuery(`posts${id}`, async () => {
     const res = await fetch(`${URL}posts/personal/${id}`, {
       headers: {
         Authorization: `Bearer ${state.token}`,
@@ -86,7 +86,7 @@ const ProfilePage = () => {
       {PostsQuery.data && PostsQuery.data.length > 0 && (
         <Box sx={{ width: '100%', maxWidth: '800px' }}>
           {PostsQuery.data.map((x: any) => {
-            return <PostCard post={x} key={x.id} />;
+            return <PostCard post={x} key={x.id} edit={true} />;
           })}
         </Box>
       )}
