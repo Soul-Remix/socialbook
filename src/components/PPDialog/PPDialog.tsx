@@ -18,7 +18,7 @@ import { useTrackedStore } from '../../store/store';
 import { URL as URI } from '../../config/url';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
-const PFDialog = ({ open, setOpen }: any) => {
+const PPDialog = ({ open, setOpen }: any) => {
   const [files, setFiles]: [any, any] = useState([]);
   const [error, setError]: [any, any] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -187,4 +187,4 @@ const PFDialog = ({ open, setOpen }: any) => {
   );
 };
 
-export default PFDialog;
+export default PPDialog;

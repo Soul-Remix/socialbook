@@ -9,7 +9,12 @@ import {
   Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useQuery } from 'react-query';
 import { useHistory } from 'react-router';
+import { URL } from '../../config/url';
+import { useTrackedStore } from '../../store/store';
+import AvatarSkeleton from '../AvatarSkeleton/AvatarSkeleton';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -42,6 +47,29 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const SidebarOnlineFriends = () => {
   const history = useHistory();
+  const state = useTrackedStore();
+
+  const fetchOnlineFriends = async () => {
+    const res = await fetch(`${URL}friends/${state.user.id}/online`, {
+      headers: {
+        Authorization: `Bearer ${state.token}`,
+      },
+    });
+    const data = await res.json();
+    if (res.status === 401) {
+      state.logOut();
+      return;
+    }
+    if (res.status !== 200 && res.status !== 201) {
+      throw new Error(data.message);
+    }
+    return data;
+  };
+
+  const { data, isLoading, isError, error } = useQuery(
+    'friendsOnline',
+    fetchOnlineFriends
+  );
 
   return (
     <>
@@ -51,24 +79,40 @@ const SidebarOnlineFriends = () => {
             Online Friends
           </Typography>
         </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            history.push('/chat');
-          }}
-        >
-          <ListItemIcon>
-            <AvatarGroup max={4}>
-              <StyledBadge
-                overlap="circular"
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                variant="dot"
-              >
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              </StyledBadge>
-            </AvatarGroup>
-          </ListItemIcon>
-        </ListItem>
+        {isError && <ErrorMessage message={error} />}
+        {data && data.length === 0 && (
+          <ListItem>
+            <Typography>0 Online Friends</Typography>
+          </ListItem>
+        )}
+        {data && data.length > 0 && (
+          <ListItem
+            button
+            onClick={() => {
+              history.push('/chat');
+            }}
+          >
+            <ListItemIcon>
+              <AvatarGroup max={4}>
+                <StyledBadge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  variant="dot"
+                >
+                  {data.map((x: any) => {
+                    return (
+                      <Avatar
+                        alt={`${x.firstName} ${x.lastName}`}
+                        src={x.profilePicture}
+                      />
+                    );
+                  })}
+                </StyledBadge>
+              </AvatarGroup>
+            </ListItemIcon>
+          </ListItem>
+        )}
+        {isLoading && <AvatarSkeleton />}
       </List>
       <Divider />
     </>

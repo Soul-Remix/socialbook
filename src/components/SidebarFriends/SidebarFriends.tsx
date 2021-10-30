@@ -75,7 +75,11 @@ const SidebarFriends = () => {
             Friends
           </Typography>
         </ListItem>
-        {isError && <ErrorMessage message={error} />}
+        {isError && (
+          <ListItem>
+            <ErrorMessage message={error} />
+          </ListItem>
+        )}
         {data &&
           data.map((f: any) => {
             return (
