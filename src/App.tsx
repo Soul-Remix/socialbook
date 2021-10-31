@@ -9,6 +9,7 @@ import RightSidebar from './components/RightSidebar/RightSidebar';
 import { LoginPage } from './pages/Login/LoginPage';
 import MainPage from './pages/MainPage/MainPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import RequestsPage from './pages/RequestsPage/RequestsPage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import { useTrackedStore } from './store/store';
 
@@ -46,6 +47,9 @@ function App() {
           </Route>
           <Route path="/settings" exact>
             <SettingsPage />
+          </Route>
+          <Route path="/requests" exact>
+            <RequestsPage />
           </Route>
           <RightSidebar />
           <MobileBottomNav />

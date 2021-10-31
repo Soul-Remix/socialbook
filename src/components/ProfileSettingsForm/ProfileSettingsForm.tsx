@@ -58,6 +58,7 @@ const ProfileSettingsForm = (props: any) => {
   const handleSubmit = async (values: any) => {
     setLoading(true);
     setSuccess(false);
+    values.birthDate = values.birthDate || null;
     const res = await fetch(`${URL}users/${state.user.id}/profile`, {
       method: 'PATCH',
       headers: {
@@ -182,7 +183,14 @@ const ProfileSettingsForm = (props: any) => {
             shrink: true,
           }}
         />
-        {!loading && <Button type="submit">Submit</Button>}
+        {!loading && (
+          <Button
+            type="submit"
+            disabled={formik.values === formik.initialValues}
+          >
+            Submit
+          </Button>
+        )}
         {loading && <CircularProgress />}
         <Snackbar open={success} autoHideDuration={4000} onClose={handleClose}>
           <Alert severity="success" sx={{ width: '100%' }}>

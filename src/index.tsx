@@ -6,7 +6,13 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import './index.css';
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 240000,
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
