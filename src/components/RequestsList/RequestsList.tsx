@@ -44,6 +44,7 @@ const RequestsList = (props: any) => {
           requests: prev.requests.filter((x: any) => x.id !== data.id),
         };
       });
+      queryClient.refetchQueries('friends');
     },
   });
 
@@ -67,7 +68,7 @@ const RequestsList = (props: any) => {
           {requests.map((req: any) => {
             const user = users.find((user: any) => user.id === req.sender);
             return (
-              <ListItem key={req.id}>
+              <ListItem key={req.id} sx={{ mb: 2 }}>
                 <ListItemAvatar
                   onClick={() => {
                     history.push(`profile/${user.id}`);

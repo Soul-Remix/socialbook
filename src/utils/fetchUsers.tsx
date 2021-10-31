@@ -14,7 +14,6 @@ const fetchUsers = async (token: string, logOut: () => void) => {
   if (res.status !== 200 && res.status !== 201) {
     throw new Error(data.message);
   }
-  console.log(data);
   return data;
 };
 

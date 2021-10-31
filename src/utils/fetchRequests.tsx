@@ -1,7 +1,12 @@
 import { URL } from '../config/url';
 
-const fetchRequests = async (id: number, token: string, logOut: () => void) => {
-  const res = await fetch(`${URL}friends/${id}/requests`, {
+const fetchRequests = async (
+  id: number,
+  token: string,
+  logOut: () => void,
+  type: string
+) => {
+  const res = await fetch(`${URL}friends/${id}/${type}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -14,7 +19,6 @@ const fetchRequests = async (id: number, token: string, logOut: () => void) => {
   if (res.status !== 200 && res.status !== 201) {
     throw new Error(data.message);
   }
-  console.log(data);
   return data;
 };
 
