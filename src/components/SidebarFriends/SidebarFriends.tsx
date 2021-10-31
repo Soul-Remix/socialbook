@@ -12,8 +12,8 @@ import { useQuery } from 'react-query';
 import { useHistory } from 'react-router';
 import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
-import AvatarSkeleton from '../AvatarSkeleton/AvatarSkeleton';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import AvatarSkeleton from '../skeletons/AvatarSkeleton/AvatarSkeleton';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {

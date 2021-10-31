@@ -5,7 +5,8 @@ import { useQuery } from 'react-query';
 import AccountSettingsForm from '../../components/AccountSettingsForm/AccountSettingsForm';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import ProfileSettingsForm from '../../components/ProfileSettingsForm/ProfileSettingsForm';
-import SettingsFormSkeleton from '../../components/SettingsFormSkeleton/SettingsFormSkeleton';
+import SettingsFormSkeleton from '../../components/skeletons/SettingsFormSkeleton/SettingsFormSkeleton';
+
 import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
 
