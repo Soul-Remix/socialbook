@@ -1,4 +1,5 @@
-import { Container } from '@mui/material';
+import { CircularProgress, Container } from '@mui/material';
+import { Box } from '@mui/system';
 import { useQuery } from 'react-query';
 import RequestsList from '../../components/RequestsList/RequestsList';
 import UsersList from '../../components/UsersList/UsersList';
@@ -32,11 +33,27 @@ const RequestsPage = () => {
         position: 'relative',
       }}
     >
+      {usersQuery.isLoading &&
+        friendsQuery.isLoading &&
+        requestsQuery.isLoading &&
+        sentRequestsQuery.isLoading && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              minHeight: '80vh',
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
       {requestsQuery.data && <RequestsList data={requestsQuery.data} />}
       {usersQuery.data &&
         friendsQuery.data &&
         requestsQuery.data &&
-        sentRequestsQuery && (
+        sentRequestsQuery.data && (
           <UsersList
             users={usersQuery.data.users}
             friends={friendsQuery.data}

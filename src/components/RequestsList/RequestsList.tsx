@@ -84,7 +84,14 @@ const RequestsList = (props: any) => {
                   <ListItemText
                     sx={{ fontWeight: 'bold' }}
                   >{`${user.firstName} ${user.lastName}`}</ListItemText>
-                  <Box sx={{ display: 'flex', width: '100%', gap: '15px' }}>
+                  <Box
+                    sx={{
+                      display: 'grid',
+                      width: '100%',
+                      gap: '15px',
+                      gridTemplateColumns: '1fr 1fr',
+                    }}
+                  >
                     {!mutation.isLoading && (
                       <>
                         <Button

@@ -6,6 +6,7 @@ import MobileDrawer from './components/MobileDrawer/MobileDrawer';
 import NavBar from './components/NavBar/NavBar';
 import PcDrawer from './components/PcDrawer/PcDrawer';
 import RightSidebar from './components/RightSidebar/RightSidebar';
+import ChatPage from './pages/ChatPage/ChatPage';
 import { LoginPage } from './pages/Login/LoginPage';
 import MainPage from './pages/MainPage/MainPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
@@ -50,6 +51,9 @@ function App() {
           </Route>
           <Route path="/requests" exact>
             <RequestsPage />
+          </Route>
+          <Route path="/chat" exact>
+            <ChatPage />
           </Route>
           <RightSidebar />
           <MobileBottomNav />

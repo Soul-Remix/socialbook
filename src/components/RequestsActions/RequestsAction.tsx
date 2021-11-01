@@ -124,7 +124,6 @@ const RequestsAction = (props: any) => {
         <Button
           variant="contained"
           sx={{
-            flex: 1,
             textTransform: 'initial',
           }}
           onClick={() => {
@@ -138,7 +137,6 @@ const RequestsAction = (props: any) => {
         <Button
           variant="contained"
           sx={{
-            flexGrow: 1,
             textTransform: 'initial',
           }}
           color="error"
@@ -153,7 +151,6 @@ const RequestsAction = (props: any) => {
         <Button
           variant="contained"
           sx={{
-            flexGrow: 1,
             textTransform: 'initial',
           }}
           color="success"
@@ -176,7 +173,6 @@ const RequestsAction = (props: any) => {
             variant="outlined"
             sx={{
               color: 'text.secondary',
-              flexGrow: 1,
               borderColor: 'text.secondary',
               textTransform: 'initial',
             }}

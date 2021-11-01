@@ -80,7 +80,13 @@ const SidebarFriends = () => {
             <ErrorMessage message={error} />
           </ListItem>
         )}
+        {data && data.length === 0 && (
+          <ListItem>
+            <Typography>You have no Friends</Typography>
+          </ListItem>
+        )}
         {data &&
+          data.length > 0 &&
           data.map((f: any) => {
             return (
               <ListItem

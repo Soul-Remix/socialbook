@@ -69,9 +69,10 @@ const UsersList = (props: any) => {
                   >{`${user.firstName} ${user.lastName}`}</ListItemText>
                   <Box
                     sx={{
-                      display: 'flex',
+                      display: 'grid',
                       width: '100%',
                       gap: '15px',
+                      gridTemplateColumns: '1fr 1fr',
                     }}
                   >
                     {!loading && (
@@ -88,7 +89,6 @@ const UsersList = (props: any) => {
                             variant="outlined"
                             sx={{
                               color: 'text.secondary',
-                              flex: 1,
                               borderColor: 'text.secondary',
                               textTransform: 'initial',
                             }}
