@@ -1,4 +1,3 @@
-import { SentimentSatisfied } from '@mui/icons-material';
 import {
   Avatar,
   Button,
@@ -9,78 +8,17 @@ import {
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import { useMutation } from 'react-query';
+import { useState } from 'react';
 import { useHistory } from 'react-router';
-import { queryClient } from '../..';
-import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
+import RequestsAction from '../RequestsActions/RequestsAction';
 
 const UsersList = (props: any) => {
   const { users, friends, sent } = props;
   const { requests } = props.requests;
   const history = useHistory();
   const state = useTrackedStore();
-
-  const handleAdd = async (recId: number) => {
-    const res = await fetch(`${URL}friends`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${state.token}`,
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        sender: state.user.id,
-        receiver: recId,
-      }),
-    });
-    const data = await res.json();
-    if (res.status === 401) {
-      state.logOut();
-      throw new Error(data.message);
-    }
-    if (res.status !== 200 && res.status !== 201) {
-      throw new Error(data.message);
-    }
-    return data;
-  };
-
-  const handleRemove = async (id: number) => {
-    const res = await fetch(`${URL}friends/user/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${state.token}`,
-      },
-    });
-    const data = await res.json();
-    if (res.status === 401) {
-      state.logOut();
-      throw new Error(data.message);
-    }
-    if (res.status !== 200 && res.status !== 201) {
-      throw new Error(data.message);
-    }
-    return data;
-  };
-
-  const addMutation = useMutation('handleReq', handleAdd, {
-    onSuccess: (data) => {
-      queryClient.setQueryData('sent', (prev: any) => {
-        return [...prev, data];
-      });
-      queryClient.refetchQueries(['users', 'friends', 'sent']);
-    },
-  });
-
-  const deleteMutation = useMutation('removeReq', handleRemove, {
-    onSuccess: (data) => {
-      queryClient.setQueryData('friends', (prev: any) => {
-        return prev.filter((x: any) => {
-          return x.id !== data.userId;
-        });
-      });
-      queryClient.refetchQueries(['users', 'friends', 'sent']);
-    },
-  });
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -105,7 +43,7 @@ const UsersList = (props: any) => {
             const isReqReceived = requests.find(
               (x: any) => x.sender === user.id
             );
-            if (isReqReceived || sameUser) {
+            if (sameUser) {
               return null;
             }
             return (
@@ -136,68 +74,34 @@ const UsersList = (props: any) => {
                       gap: '15px',
                     }}
                   >
-                    {(!addMutation.isLoading || !deleteMutation.isLoading) && (
+                    {!loading && (
                       <>
-                        {!isFriends && !isReqSent && (
+                        <RequestsAction
+                          isFriends={isFriends}
+                          isReqSent={isReqSent}
+                          isReqReceived={isReqReceived}
+                          id={user.id}
+                          setLoading={setLoading}
+                        />
+                        {!isReqReceived && (
                           <Button
-                            variant="contained"
+                            variant="outlined"
                             sx={{
+                              color: 'text.secondary',
                               flex: 1,
+                              borderColor: 'text.secondary',
                               textTransform: 'initial',
                             }}
                             onClick={() => {
-                              addMutation.mutate(user.id);
+                              history.push(`profile/${user.id}`);
                             }}
                           >
-                            Add
+                            Profile
                           </Button>
                         )}
-                        {isFriends && !isReqSent && (
-                          <Button
-                            variant="contained"
-                            sx={{
-                              flexGrow: 1,
-                              textTransform: 'initial',
-                            }}
-                            color="error"
-                            onClick={() => {
-                              deleteMutation.mutate(user.id);
-                            }}
-                          >
-                            Remove
-                          </Button>
-                        )}
-                        {!isFriends && isReqSent && (
-                          <Button
-                            variant="contained"
-                            sx={{
-                              flexGrow: 1,
-                              textTransform: 'initial',
-                            }}
-                            color="success"
-                          >
-                            Sent
-                          </Button>
-                        )}
-                        <Button
-                          variant="outlined"
-                          sx={{
-                            color: 'text.secondary',
-                            flex: 1,
-                            borderColor: 'text.secondary',
-                            textTransform: 'initial',
-                          }}
-                          onClick={() => {
-                            history.push(`profile/${user.id}`);
-                          }}
-                        >
-                          Profile
-                        </Button>
                       </>
                     )}
-                    {(addMutation.isLoading || deleteMutation.isLoading) && (
-                      <CircularProgress />
-                    )}
+                    {loading && <CircularProgress />}
                   </Box>
                 </Box>
               </ListItem>
