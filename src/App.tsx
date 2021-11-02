@@ -1,11 +1,12 @@
 import { Box } from '@mui/system';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Redirect, Route } from 'react-router';
 import MobileBottomNav from './components/MobileBottomNav/MobileBottomNav';
 import MobileDrawer from './components/MobileDrawer/MobileDrawer';
 import NavBar from './components/NavBar/NavBar';
 import PcDrawer from './components/PcDrawer/PcDrawer';
 import RightSidebar from './components/RightSidebar/RightSidebar';
+import { useWebsocket } from './hooks/socket';
 import ChatPage from './pages/ChatPage/ChatPage';
 import { LoginPage } from './pages/Login/LoginPage';
 import MainPage from './pages/MainPage/MainPage';

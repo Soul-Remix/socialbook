@@ -23,6 +23,8 @@ import fetchUser from '../../utils/fetchUser';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { URL } from '../../config/url';
 import { queryClient } from '../..';
+import { useEffect, useRef } from 'react';
+import { useWebsocket } from '../../hooks/socket';
 
 dayjs.extend(relativeTime);
 
@@ -31,9 +33,22 @@ const validationSchema = Yup.object({
 });
 
 const Conversation = (props: any) => {
-  const { convoId, userId, setConvoId, setStartConvo } = props;
+  const { convoId, user, setConvoId, setStartConvo } = props;
+  const userId = user.id;
+  const userSocketId = user.sId;
   const state = useTrackedStore();
   const history = useHistory();
+  const scrollRef = useRef<null | HTMLDivElement>(null);
+  const socket = useWebsocket();
+
+  useEffect(() => {
+    socket?.on('message', (data: any) => {
+      queryClient.setQueryData(`convo${data.conversationId}`, (prev: any) => {
+        const newMessages = prev.messages.concat(data);
+        return { ...prev, messages: newMessages };
+      });
+    });
+  }, []);
 
   const handleSubmit = async (values: any) => {
     const res = await fetch(`${URL}conversations`, {
@@ -61,13 +76,18 @@ const Conversation = (props: any) => {
   const mutation = useMutation('message', handleSubmit, {
     onMutate: (data) => {
       queryClient.cancelQueries(`convo${convoId}`);
+      const msg = {
+        ...data,
+        senderId: state.user.id,
+        createdAt: Date.now(),
+        conversationId: convoId,
+        socketId: userSocketId,
+      };
       queryClient.setQueryData(`convo${convoId}`, (prev: any) => {
-        const newMessages = prev.messages.concat({
-          ...data,
-          senderId: state.user.id,
-        });
+        const newMessages = prev.messages.concat(msg);
         return { ...prev, messages: newMessages };
       });
+      socket?.emit('msgToServer', msg);
     },
     onError: (error, newData, rollback: any) => rollback(),
     onSettled: () => {
@@ -92,6 +112,11 @@ const Conversation = (props: any) => {
   const userQuery = useQuery(`user${userId}`, () =>
     fetchUser(state.token, userId, state.logOut)
   );
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [, convoQuery.data]);
+
   return (
     <Box>
       <Button
@@ -184,8 +209,11 @@ const Conversation = (props: any) => {
                     sx={{
                       maxWidth: '75%',
                       m: 1,
+                      mt: '2px',
+                      mb: '2px',
                       alignSelf: 'flex-end',
                     }}
+                    ref={scrollRef}
                   >
                     <Typography
                       sx={{
@@ -216,7 +244,10 @@ const Conversation = (props: any) => {
                       display: 'flex',
                       maxWidth: '75%',
                       m: 1,
+                      mt: '2px',
+                      mb: '2px',
                     }}
+                    ref={scrollRef}
                   >
                     <Avatar
                       src={userQuery.data.profilePicture}
@@ -258,7 +289,6 @@ const Conversation = (props: any) => {
           >
             <TextField
               placeholder="message"
-              multiline
               fullWidth
               name="text"
               id="message"

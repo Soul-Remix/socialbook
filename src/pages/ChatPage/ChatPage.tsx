@@ -88,7 +88,7 @@ const ChatPage = () => {
                       textTransform: 'initial',
                     }}
                     onClick={() => {
-                      setUser(user.id);
+                      setUser(user);
                       setConvoId(x.id);
                       setStartConvo(true);
                     }}
@@ -131,7 +131,7 @@ const ChatPage = () => {
       {startConvo && convoId && (
         <Conversation
           convoId={convoId}
-          userId={user}
+          user={user}
           setStartConvo={setStartConvo}
           setConvoId={setConvoId}
         />
