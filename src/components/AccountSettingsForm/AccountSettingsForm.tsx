@@ -9,6 +9,7 @@ import {
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import { useState } from 'react';
+import { useMutation } from 'react-query';
 import * as Yup from 'yup';
 import { useTrackedStore } from '../../store/store';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -29,23 +30,18 @@ const validationSchema = Yup.object({
 });
 
 const AccountSettingsForm = ({ user }: any) => {
-  const [error, setError]: [null | {}, any] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const state = useTrackedStore();
+  const [success, setSuccess] = useState(false);
 
   // Close SnackBar
   const handleClose = (event: any, reason: any) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setSuccess(false);
   };
 
   const handleSubmit = async (values: any) => {
-    setLoading(true);
-    setSuccess(false);
     const res = await fetch(
       `${process.env.REACT_APP_URI}/users/${state.user.id}`,
       {
@@ -63,16 +59,17 @@ const AccountSettingsForm = ({ user }: any) => {
       return;
     }
     if (res.status !== 200 && res.status !== 201) {
-      setError({ message: data.message });
-      setLoading(false);
-      return;
+      throw new Error(data.message);
     }
-    state.setUser({ ...state.user, ...values });
-    setLoading(false);
-    setError(null);
-    setSuccess(true);
     return data;
   };
+
+  const mutation = useMutation('accountSetting', handleSubmit, {
+    onSuccess: (data) => {
+      state.setUser({ ...state.user, ...data });
+      setSuccess(true);
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -81,7 +78,7 @@ const AccountSettingsForm = ({ user }: any) => {
       lastName: user.lastName,
     },
     onSubmit: (values) => {
-      handleSubmit(values);
+      mutation.mutate(values);
     },
     validationSchema: validationSchema,
   });
@@ -105,7 +102,7 @@ const AccountSettingsForm = ({ user }: any) => {
           maxWidth: '500px',
         }}
       >
-        {error && <ErrorMessage message={error} />}
+        {mutation.isError && <ErrorMessage message={mutation.error} />}
         <TextField
           fullWidth
           label="Email"
@@ -148,8 +145,8 @@ const AccountSettingsForm = ({ user }: any) => {
             helperText={formik.touched.lastName && formik.errors.lastName}
           />
         </Box>
-        {!loading && <Button type="submit">Submit</Button>}
-        {loading && <CircularProgress />}
+        {!mutation.isLoading && <Button type="submit">Submit</Button>}
+        {mutation.isLoading && <CircularProgress />}
 
         <Snackbar open={success} autoHideDuration={4000} onClose={handleClose}>
           <Alert severity="success" sx={{ width: '100%' }}>

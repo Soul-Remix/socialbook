@@ -12,8 +12,10 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 import { useTrackedStore } from '../../store/store';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 interface Prop {
   id: number;
@@ -31,16 +33,7 @@ const PostCardActions = ({ id, likes, comments }: Prop) => {
     setAlreadyLiked(likes.includes(state.user.id));
   }, []);
 
-  const [queryState, setQueryState] = useState({
-    isError: false,
-    error: '',
-  });
-
   const handleLike = async (method: string) => {
-    setQueryState({
-      isError: false,
-      error: '',
-    });
     const res = await fetch(`${process.env.REACT_APP_URI}/posts/${id}/likes`, {
       method: method,
       headers: {
@@ -49,11 +42,7 @@ const PostCardActions = ({ id, likes, comments }: Prop) => {
     });
     const data = await res.json();
     if (res.status !== 200 && res.status !== 201) {
-      setQueryState({
-        isError: true,
-        error: data.message,
-      });
-      return;
+      throw new Error(data.message);
     }
     if (method === 'POST') {
       setLikesArr((old) => old.concat(state.user.id));
@@ -63,16 +52,16 @@ const PostCardActions = ({ id, likes, comments }: Prop) => {
       setLikesArr((old) => likesArr.filter((x) => x !== state.user.id));
       setAlreadyLiked(false);
     }
+    return data;
   };
+
+  const mutation = useMutation(`like${id}`, handleLike);
 
   const handleClose = (event: any, reason: any) => {
     if (reason === 'clickaway') {
       return;
     }
-    setQueryState({
-      isError: false,
-      error: '',
-    });
+    mutation.reset();
   };
 
   return (
@@ -103,7 +92,7 @@ const PostCardActions = ({ id, likes, comments }: Prop) => {
         {!alreadyLiked ? (
           <IconButton
             sx={{ width: '50%', borderRadius: '0' }}
-            onClick={() => handleLike('POST')}
+            onClick={() => mutation.mutate('POST')}
           >
             <FavoriteBorder />
             <Typography sx={{ ml: 1 }}>Like</Typography>
@@ -112,7 +101,7 @@ const PostCardActions = ({ id, likes, comments }: Prop) => {
           alreadyLiked && (
             <IconButton
               sx={{ width: '50%', borderRadius: '0' }}
-              onClick={() => handleLike('DELETE')}
+              onClick={() => mutation.mutate('DELETE')}
             >
               <Favorite sx={{ color: 'primary.main' }} />
               <Typography sx={{ ml: 1, color: 'primary.main' }}>
@@ -130,12 +119,12 @@ const PostCardActions = ({ id, likes, comments }: Prop) => {
         </IconButton>
       </CardActions>
       <Snackbar
-        open={queryState.isError}
-        autoHideDuration={6000}
+        open={mutation.isError}
+        autoHideDuration={4000}
         onClose={handleClose}
       >
-        <Alert severity="error" sx={{ width: '100%' }}>
-          {queryState.error}
+        <Alert severity="error">
+          Failed to like the post, Please try again
         </Alert>
       </Snackbar>
     </>

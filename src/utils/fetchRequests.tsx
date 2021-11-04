@@ -1,6 +1,6 @@
 const fetchRequests = async (
-  id: number,
   token: string,
+  id: number,
   logOut: () => void,
   type: string
 ) => {

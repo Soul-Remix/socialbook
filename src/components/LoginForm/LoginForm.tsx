@@ -9,9 +9,11 @@ import {
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import { useState } from 'react';
+import { useMutation } from 'react-query';
 import * as Yup from 'yup';
 
 import { useTrackedStore } from '../../store/store';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -36,10 +38,6 @@ interface loginType {
 }
 
 const LoginForm = ({ showRegister }: props) => {
-  // states for fetching
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
   let state = useTrackedStore();
 
   // formik settings
@@ -49,13 +47,12 @@ const LoginForm = ({ showRegister }: props) => {
       pass: '',
     },
     onSubmit: (values) => {
-      handleLogin(values);
+      mutation.mutate(values);
     },
     validationSchema: validationSchema,
   });
 
   const handleLogin = async (values: loginType) => {
-    setLoading(true);
     const res = await fetch(`${process.env.REACT_APP_URI}/auth/login`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -63,16 +60,18 @@ const LoginForm = ({ showRegister }: props) => {
     });
     const data = await res.json();
     if (res.status !== 200 && res.status !== 201) {
-      setError(data.message);
-      setLoading(false);
-      return;
+      throw new Error(data.message);
     }
-    setLoading(false);
-    state.setUser(data.user);
-    state.setExpiry();
-    state.setToken(data.access_token);
-    return;
+    return data;
   };
+
+  const mutation = useMutation('LogIn', handleLogin, {
+    onSuccess: (data) => {
+      state.setUser(data.user);
+      state.setExpiry();
+      state.setToken(data.access_token);
+    },
+  });
 
   return (
     <Box
@@ -89,11 +88,7 @@ const LoginForm = ({ showRegister }: props) => {
         maxWidth: '500px',
       }}
     >
-      {error && (
-        <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
-          {error}
-        </Alert>
-      )}
+      {mutation.isError && <ErrorMessage message={mutation.error} />}
       <TextField
         fullWidth
         label="Email"
@@ -119,7 +114,7 @@ const LoginForm = ({ showRegister }: props) => {
         error={formik.touched.pass && Boolean(formik.errors.pass)}
         helperText={formik.touched.pass && formik.errors.pass}
       />
-      {!loading && (
+      {!mutation.isLoading && (
         <>
           <Button
             variant="contained"
@@ -154,7 +149,7 @@ const LoginForm = ({ showRegister }: props) => {
           </Button>
         </>
       )}
-      {loading && <CircularProgress sx={{ mt: 2 }} />}
+      {mutation.isLoading && <CircularProgress sx={{ mt: 2 }} />}
     </Box>
   );
 };

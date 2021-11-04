@@ -12,10 +12,10 @@ const RequestsPage = () => {
   const state = useTrackedStore();
 
   const requestsQuery = useQuery('requests', () =>
-    fetchRequests(state.user.id, state.token, state.logOut, 'requests')
+    fetchRequests(state.token, state.user.id, state.logOut, 'requests')
   );
   const sentRequestsQuery = useQuery('sent', () =>
-    fetchRequests(state.user.id, state.token, state.logOut, 'sent')
+    fetchRequests(state.token, state.user.id, state.logOut, 'sent')
   );
   const usersQuery = useQuery('users', () =>
     fetchUsers(state.token, state.logOut)

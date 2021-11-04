@@ -10,7 +10,9 @@ import {
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import { useState } from 'react';
+import { useMutation } from 'react-query';
 import * as Yup from 'yup';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 // yup validation schema
 const validationSchema = Yup.object({
@@ -47,12 +49,9 @@ interface SignUpValues {
 }
 
 const RegisterForm = ({ showLogin }: Prop) => {
-  // states for fetching
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
-  // open the succes message
+  // open the success message
   const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState(null);
   // formik settings
   const formik = useFormik({
     initialValues: {
@@ -63,17 +62,13 @@ const RegisterForm = ({ showLogin }: Prop) => {
       lastName: '',
     },
     onSubmit: (values) => {
-      handleSignup(values);
+      mutation.mutate(values);
     },
     validationSchema: validationSchema,
   });
 
   // Sign up functions
   const handleSignup = async (values: SignUpValues) => {
-    setLoading(true);
-    setOpen(false);
-    setMessage(null);
-
     const res = await fetch(`${process.env.REACT_APP_URI}/users`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -81,27 +76,28 @@ const RegisterForm = ({ showLogin }: Prop) => {
     });
     const data = await res.json();
     if (res.status !== 200 && res.status !== 201) {
-      setError(data.message);
-      setLoading(false);
-      return;
+      throw new Error(data.message);
     }
-    setMessage(data.message);
-    setLoading(false);
-    setError(null);
-    setOpen(true);
-    setTimeout(() => {
-      showLogin();
-    }, 1000);
-    return;
+    return data;
   };
+
+  const mutation = useMutation('SignUp', handleSignup, {
+    onSuccess: (data) => {
+      setMessage(data.message);
+      setOpen(true);
+      setTimeout(() => {
+        showLogin();
+      }, 1500);
+    },
+  });
 
   // Close success message
   const handleClose = (event: any, reason: any) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setMessage(null);
+    setOpen(false);
   };
 
   return (
@@ -119,11 +115,7 @@ const RegisterForm = ({ showLogin }: Prop) => {
         maxWidth: '500px',
       }}
     >
-      {error && (
-        <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
-          {error}
-        </Alert>
-      )}
+      {mutation.isError && <ErrorMessage message={mutation.error} />}
       <TextField
         fullWidth
         label="Email"
@@ -195,7 +187,7 @@ const RegisterForm = ({ showLogin }: Prop) => {
         error={formik.touched.confPass && Boolean(formik.errors.confPass)}
         helperText={formik.touched.confPass && formik.errors.confPass}
       />
-      {loading ? (
+      {mutation.isLoading ? (
         <CircularProgress sx={{ mt: 2 }} />
       ) : (
         <>
@@ -214,7 +206,7 @@ const RegisterForm = ({ showLogin }: Prop) => {
           </Button>
           <Divider sx={{ mt: 2, mb: 2, width: '100%' }}></Divider>
           <Typography>
-            Already have an account?{' '}
+            Already have an account?
             <Button variant="text" onClick={showLogin}>
               Sign in
             </Button>

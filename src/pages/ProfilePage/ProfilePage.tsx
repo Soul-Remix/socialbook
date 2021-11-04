@@ -14,6 +14,7 @@ import fetchUser from '../../utils/fetchUser';
 import ProfileAvatarSkeleton from '../../components/skeletons/ProfileAvatarSkeleton/ProfileAvatarSkeleton';
 import ProfileInfoSkeleton from '../../components/skeletons/ProfileInfoSkeleton/ProfileInfoSkeleton';
 import ProfileFriendsCardSkeleton from '../../components/skeletons/ProfileFriendsCardSkeleton/ProfileFriendsCardSkeleton';
+import fetchUserPosts from '../../utils/fetchUserPosts';
 
 const ProfilePage = () => {
   const { id }: any = useParams();
@@ -25,25 +26,9 @@ const ProfilePage = () => {
   const friendsQuery = useQuery(`friends${id}`, () =>
     fetchFriends(state.token, id, state.logOut)
   );
-  const PostsQuery = useQuery(`posts${id}`, async () => {
-    const res = await fetch(
-      `${process.env.REACT_APP_URI}/posts/personal/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${state.token}`,
-        },
-      }
-    );
-    const data = await res.json();
-    if (res.status === 401) {
-      state.logOut();
-      return;
-    }
-    if (res.status !== 200 && res.status !== 201) {
-      throw new Error(data.message);
-    }
-    return data;
-  });
+  const PostsQuery = useQuery(`posts${id}`, () =>
+    fetchUserPosts(state.token, id, state.logOut)
+  );
 
   return (
     <Container

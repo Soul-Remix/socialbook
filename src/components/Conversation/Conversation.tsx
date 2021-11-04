@@ -11,7 +11,7 @@ import {
 import { Box } from '@mui/system';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { QueryCache, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -219,7 +219,6 @@ const Conversation = (props: any) => {
                         p: 1,
                         mr: 2,
                         borderRadius: '20px',
-                        textTransform: 'initial',
                         background: '#1976d2',
                         color: 'white',
                         overflowWrap: 'break-word',

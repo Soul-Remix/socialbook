@@ -8,6 +8,7 @@ import ProfileSettingsForm from '../../components/ProfileSettingsForm/ProfileSet
 import SettingsFormSkeleton from '../../components/skeletons/SettingsFormSkeleton/SettingsFormSkeleton';
 
 import { useTrackedStore } from '../../store/store';
+import fetchUser from '../../utils/fetchUser';
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
@@ -34,23 +35,9 @@ const SettingsPage = () => {
     setValue(newValue);
   };
 
-  const { data, isLoading, isError, error } = useQuery(`settings`, async () => {
-    const res = await fetch(`${process.env.REACT_APP_URI}/users/${id}`, {
-      headers: {
-        Authorization: `Bearer ${state.token}`,
-      },
-    });
-
-    const data = await res.json();
-    if (res.status === 401) {
-      state.logOut();
-      return;
-    }
-    if (res.status !== 200 && res.status !== 201) {
-      throw new Error(data.message);
-    }
-    return data;
-  });
+  const { data, isLoading, isError, error } = useQuery(`user${id}`, () =>
+    fetchUser(state.token, id, state.logOut)
+  );
 
   return (
     <Container>
