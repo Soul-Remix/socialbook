@@ -16,6 +16,7 @@ import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useMutation } from 'react-query';
+import { useTheme } from '@mui/material/styles';
 
 import { useTrackedStore } from '../../store/store';
 import fetchConvo from '../../utils/fetchConvo';
@@ -39,6 +40,7 @@ const Conversation = (props: any) => {
   const history = useHistory();
   const scrollRef = useRef<null | HTMLDivElement>(null);
   const socket = useWebsocket();
+  const theme = useTheme();
 
   useEffect(() => {
     socket?.on('message', (data: any) => {
@@ -189,8 +191,8 @@ const Conversation = (props: any) => {
         <>
           <Box
             sx={{
-              minHeight: 'calc(100vh - 274px)',
-              maxHeight: 'calc(100vh - 274px)',
+              minHeight: 'calc(100vh - 280px)',
+              maxHeight: 'calc(100vh - 280px)',
               width: '100%',
               borderLeft: '1px solid',
               borderRight: '1px solid',
@@ -254,6 +256,8 @@ const Conversation = (props: any) => {
                     <Box>
                       <Typography
                         sx={{
+                          color:
+                            theme.palette.mode === 'dark' ? 'black' : 'white',
                           p: 1,
                           ml: 1,
                           borderRadius: '20px',

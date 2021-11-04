@@ -22,6 +22,7 @@ import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTrackedStore } from '../../store/store';
+import DarkModeSwitch from '../DarkModeSwitch/DarkModeSwitch';
 
 interface Prop {
   toggleDrawer: any;
@@ -107,6 +108,7 @@ const DrawerList = ({ toggleDrawer }: Prop) => {
               </ListItemIcon>
               <ListItemText primary="Account" />
             </ListItemButton>
+            <DarkModeSwitch />
           </List>
         </Collapse>
         <ListItemButton

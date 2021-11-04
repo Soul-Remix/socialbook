@@ -19,12 +19,14 @@ interface StoreState extends State {
   expiry: number | null;
   navValue: string;
   showDrawer: boolean;
+  darkMode: boolean;
   setUser: (data: any) => void;
   setToken: (data: any) => void;
   setExpiry: () => void;
   logOut: () => void;
   setNavValue: (value: string) => void;
   toggleDrawer: () => void;
+  setDarkMode: () => void;
 }
 
 export const useStore = create<StoreState>(
@@ -35,6 +37,7 @@ export const useStore = create<StoreState>(
       expiry: null,
       showDrawer: false,
       navValue: 'home',
+      darkMode: false,
       setUser: (data: any) => set({ user: { ...data } }),
       setExpiry: () => set({ expiry: Date.now() + 86400000 }),
       setToken: (data: string) => set({ token: data }),
@@ -43,6 +46,7 @@ export const useStore = create<StoreState>(
       logOut: () => {
         set({ user: null, token: null, expiry: null, navValue: 'home' });
       },
+      setDarkMode: () => set({ darkMode: !get().darkMode }),
     }),
     {
       name: 'user-storage',

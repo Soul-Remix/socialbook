@@ -1,12 +1,12 @@
 import { Box } from '@mui/system';
-import { useEffect, useState } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useEffect, useMemo } from 'react';
 import { Redirect, Route } from 'react-router';
 import MobileBottomNav from './components/MobileBottomNav/MobileBottomNav';
 import MobileDrawer from './components/MobileDrawer/MobileDrawer';
 import NavBar from './components/NavBar/NavBar';
 import PcDrawer from './components/PcDrawer/PcDrawer';
 import RightSidebar from './components/RightSidebar/RightSidebar';
-import { useWebsocket } from './hooks/socket';
 import ChatPage from './pages/ChatPage/ChatPage';
 import { LoginPage } from './pages/Login/LoginPage';
 import MainPage from './pages/MainPage/MainPage';
@@ -17,6 +17,16 @@ import { useTrackedStore } from './store/store';
 
 function App() {
   const state = useTrackedStore();
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: state.darkMode ? 'dark' : 'light',
+        },
+      }),
+    [state.darkMode]
+  );
 
   useEffect(() => {
     if (state.expiry === null) {
@@ -33,7 +43,7 @@ function App() {
   }
   if (state.user && state.token) {
     return (
-      <>
+      <ThemeProvider theme={theme}>
         <NavBar />
         <MobileDrawer />
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -59,7 +69,7 @@ function App() {
           <RightSidebar />
           <MobileBottomNav />
         </Box>
-      </>
+      </ThemeProvider>
     );
   } else {
     return null;
