@@ -1,16 +1,17 @@
-import { URL } from '../config/url';
-
 const fetchRequests = async (
   id: number,
   token: string,
   logOut: () => void,
   type: string
 ) => {
-  const res = await fetch(`${URL}friends/${id}/${type}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await fetch(
+    `${process.env.REACT_APP_URI}/friends/${id}/${type}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   const data = await res.json();
   if (res.status === 401) {
     logOut();

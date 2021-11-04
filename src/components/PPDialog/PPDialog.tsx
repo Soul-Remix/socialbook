@@ -15,7 +15,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { storage } from '../../firebase/firebase';
 import { useTrackedStore } from '../../store/store';
-import { URL as URI } from '../../config/url';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const PPDialog = ({ open, setOpen }: any) => {
@@ -77,14 +76,17 @@ const PPDialog = ({ open, setOpen }: any) => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          const res = await fetch(`${URI}users/${state.user.id}`, {
-            method: 'PATCH',
-            headers: {
-              'content-type': 'application/json',
-              Authorization: `Bearer ${state.token}`,
-            },
-            body: JSON.stringify({ profilePicture: downloadURL }),
-          });
+          const res = await fetch(
+            `${process.env.REACT_APP_URI}/users/${state.user.id}`,
+            {
+              method: 'PATCH',
+              headers: {
+                'content-type': 'application/json',
+                Authorization: `Bearer ${state.token}`,
+              },
+              body: JSON.stringify({ profilePicture: downloadURL }),
+            }
+          );
           const data = await res.json();
           if (res.status === 401) {
             state.logOut();

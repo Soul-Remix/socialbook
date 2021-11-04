@@ -7,7 +7,6 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import ProfileSettingsForm from '../../components/ProfileSettingsForm/ProfileSettingsForm';
 import SettingsFormSkeleton from '../../components/skeletons/SettingsFormSkeleton/SettingsFormSkeleton';
 
-import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
 
 function TabPanel(props: any) {
@@ -36,7 +35,7 @@ const SettingsPage = () => {
   };
 
   const { data, isLoading, isError, error } = useQuery(`settings`, async () => {
-    const res = await fetch(`${URL}users/${id}`, {
+    const res = await fetch(`${process.env.REACT_APP_URI}/users/${id}`, {
       headers: {
         Authorization: `Bearer ${state.token}`,
       },
@@ -45,6 +44,7 @@ const SettingsPage = () => {
     const data = await res.json();
     if (res.status === 401) {
       state.logOut();
+      return;
     }
     if (res.status !== 200 && res.status !== 201) {
       throw new Error(data.message);

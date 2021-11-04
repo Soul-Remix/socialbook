@@ -56,7 +56,7 @@ const LoginForm = ({ showRegister }: props) => {
 
   const handleLogin = async (values: loginType) => {
     setLoading(true);
-    const res = await fetch(`http://localhost:8000/auth/login`, {
+    const res = await fetch(`${process.env.REACT_APP_URI}/auth/login`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(values),

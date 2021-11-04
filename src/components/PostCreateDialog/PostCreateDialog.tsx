@@ -20,7 +20,6 @@ import { useMutation } from 'react-query';
 
 import { storage } from '../../firebase/firebase';
 import { useTrackedStore } from '../../store/store';
-import { URL as URI } from '../../config/url';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { queryClient } from '../..';
 
@@ -43,6 +42,7 @@ const PostCreateDialog = ({ open, setOpen }: any) => {
     isDragReject,
   } = useDropzone({
     maxFiles: 1,
+    maxSize: 5242880,
     accept: 'image/jpeg, image/png, image/jpg',
     onDrop: (acceptedFiles) => {
       setFiles(
@@ -69,7 +69,7 @@ const PostCreateDialog = ({ open, setOpen }: any) => {
 
   const handleSubmit = async (values: any) => {
     if (!values.file) {
-      const res = await fetch(`${URI}posts`, {
+      const res = await fetch(`${process.env.REACT_APP_URI}/posts`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -91,7 +91,7 @@ const PostCreateDialog = ({ open, setOpen }: any) => {
       const storageRef = ref(storage, 'images/' + uuidv4() + values.file.name);
       const uploadTask = await uploadBytes(storageRef, values.file);
       const downloadURL = await getDownloadURL(uploadTask.ref);
-      const res = await fetch(`${URI}posts`, {
+      const res = await fetch(`${process.env.REACT_APP_URI}/posts`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

@@ -16,7 +16,6 @@ import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
@@ -59,14 +58,17 @@ const ProfileSettingsForm = (props: any) => {
     setLoading(true);
     setSuccess(false);
     values.birthDate = values.birthDate || null;
-    const res = await fetch(`${URL}users/${state.user.id}/profile`, {
-      method: 'PATCH',
-      headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${state.token}`,
-      },
-      body: JSON.stringify(values),
-    });
+    const res = await fetch(
+      `${process.env.REACT_APP_URI}/users/${state.user.id}/profile`,
+      {
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${state.token}`,
+        },
+        body: JSON.stringify(values),
+      }
+    );
     const data = await res.json();
     if (res.status === 401) {
       state.logOut();

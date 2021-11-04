@@ -2,7 +2,6 @@ import { Button } from '@mui/material';
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { queryClient } from '../..';
-import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
 
 const RequestsAction = (props: any) => {
@@ -10,7 +9,7 @@ const RequestsAction = (props: any) => {
   const state = useTrackedStore();
 
   const handleAdd = async (recId: number) => {
-    const res = await fetch(`${URL}friends`, {
+    const res = await fetch(`${process.env.REACT_APP_URI}/friends`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${state.token}`,
@@ -33,7 +32,7 @@ const RequestsAction = (props: any) => {
   };
 
   const handleRemove = async (id: number) => {
-    const res = await fetch(`${URL}friends/user/${id}`, {
+    const res = await fetch(`${process.env.REACT_APP_URI}/friends/user/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${state.token}`,
@@ -51,7 +50,7 @@ const RequestsAction = (props: any) => {
   };
 
   const handleRequest = async (obj: any) => {
-    const res = await fetch(`${URL}friends/${obj.id}`, {
+    const res = await fetch(`${process.env.REACT_APP_URI}/friends/${obj.id}`, {
       method: obj.method,
       headers: {
         Authorization: `Bearer ${state.token}`,

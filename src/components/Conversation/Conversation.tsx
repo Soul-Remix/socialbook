@@ -21,7 +21,6 @@ import { useTrackedStore } from '../../store/store';
 import fetchConvo from '../../utils/fetchConvo';
 import fetchUser from '../../utils/fetchUser';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { URL } from '../../config/url';
 import { queryClient } from '../..';
 import { useEffect, useRef } from 'react';
 import { useWebsocket } from '../../hooks/socket';
@@ -51,7 +50,7 @@ const Conversation = (props: any) => {
   }, []);
 
   const handleSubmit = async (values: any) => {
-    const res = await fetch(`${URL}conversations`, {
+    const res = await fetch(`${process.env.REACT_APP_URI}/conversations`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -115,7 +114,7 @@ const Conversation = (props: any) => {
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [, convoQuery.data]);
+  }, [convoQuery.data]);
 
   return (
     <Box>

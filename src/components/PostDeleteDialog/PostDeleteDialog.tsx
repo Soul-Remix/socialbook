@@ -11,7 +11,6 @@ import {
 import { useMutation } from 'react-query';
 
 import { useTrackedStore } from '../../store/store';
-import { URL as URI } from '../../config/url';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { queryClient } from '../..';
 
@@ -23,7 +22,7 @@ const PostDeleteDialog = ({ open, setOpen, id }: any) => {
   };
 
   const handleSubmit = async () => {
-    const res = await fetch(`${URI}posts/${id}`, {
+    const res = await fetch(`${process.env.REACT_APP_URI}/posts/${id}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',

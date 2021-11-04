@@ -74,7 +74,7 @@ const RegisterForm = ({ showLogin }: Prop) => {
     setOpen(false);
     setMessage(null);
 
-    const res = await fetch(`http://localhost:8000/users`, {
+    const res = await fetch(`${process.env.REACT_APP_URI}/users`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(values),

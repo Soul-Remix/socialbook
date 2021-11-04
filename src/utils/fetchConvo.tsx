@@ -1,7 +1,5 @@
-import { URL } from '../config/url';
-
 const fetchConvo = async (token: string, id: number, logOut: () => void) => {
-  const res = await fetch(`${URL}conversations/${id}`, {
+  const res = await fetch(`${process.env.REACT_APP_URI}/conversations/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

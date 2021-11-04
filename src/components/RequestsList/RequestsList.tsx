@@ -11,7 +11,6 @@ import { Box } from '@mui/system';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 import { queryClient } from '../..';
-import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
 
 const RequestsList = (props: any) => {
@@ -20,7 +19,7 @@ const RequestsList = (props: any) => {
   const state = useTrackedStore();
 
   const handleRequest = async (obj: any) => {
-    const res = await fetch(`${URL}friends/${obj.id}`, {
+    const res = await fetch(`${process.env.REACT_APP_URI}/friends/${obj.id}`, {
       method: obj.method,
       headers: {
         Authorization: `Bearer ${state.token}`,

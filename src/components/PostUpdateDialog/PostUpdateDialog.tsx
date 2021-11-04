@@ -15,7 +15,6 @@ import { useFormik } from 'formik';
 import { useMutation } from 'react-query';
 
 import { useTrackedStore } from '../../store/store';
-import { URL as URI } from '../../config/url';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { queryClient } from '../..';
 
@@ -34,7 +33,7 @@ const PostUpdateDialog = ({ open, setOpen, post }: any) => {
 
   const handleSubmit = async (values: any) => {
     if (!values.file) {
-      const res = await fetch(`${URI}posts/${post.id}`, {
+      const res = await fetch(`${process.env.REACT_APP_URI}/posts/${post.id}`, {
         method: 'PATCH',
         headers: {
           'content-type': 'application/json',

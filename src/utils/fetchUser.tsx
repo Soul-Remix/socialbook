@@ -1,7 +1,5 @@
-import { URL } from '../config/url';
-
 const fetchUser = async (token: string, id: number, logOut: any) => {
-  const res = await fetch(`${URL}users/${id}`, {
+  const res = await fetch(`${process.env.REACT_APP_URI}/users/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -10,7 +10,6 @@ import {
 import { styled } from '@mui/material/styles';
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router';
-import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import AvatarSkeleton from '../skeletons/AvatarSkeleton/AvatarSkeleton';
@@ -49,11 +48,14 @@ const SidebarFriends = () => {
   const history = useHistory();
 
   const fetchFriends = async () => {
-    const res = await fetch(`${URL}friends/${state.user.id}`, {
-      headers: {
-        Authorization: `Bearer ${state.token}`,
-      },
-    });
+    const res = await fetch(
+      `${process.env.REACT_APP_URI}/friends/${state.user.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${state.token}`,
+        },
+      }
+    );
     const data = await res.json();
     if (res.status === 401) {
       state.logOut();

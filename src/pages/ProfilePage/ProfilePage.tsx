@@ -8,7 +8,6 @@ import PostSkeleton from '../../components/skeletons/PostSkeleton/PostSkeleton';
 import ProfileAvatar from '../../components/ProfileAvatar/ProfileAvatar';
 import ProfileFriendsCard from '../../components/ProfileFriendsCard/ProfileFriendsCard';
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo';
-import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
 import fetchFriends from '../../utils/fetchFriends';
 import fetchUser from '../../utils/fetchUser';
@@ -27,14 +26,18 @@ const ProfilePage = () => {
     fetchFriends(state.token, id, state.logOut)
   );
   const PostsQuery = useQuery(`posts${id}`, async () => {
-    const res = await fetch(`${URL}posts/personal/${id}`, {
-      headers: {
-        Authorization: `Bearer ${state.token}`,
-      },
-    });
+    const res = await fetch(
+      `${process.env.REACT_APP_URI}/posts/personal/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${state.token}`,
+        },
+      }
+    );
     const data = await res.json();
     if (res.status === 401) {
       state.logOut();
+      return;
     }
     if (res.status !== 200 && res.status !== 201) {
       throw new Error(data.message);

@@ -13,7 +13,6 @@ import {
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { URL } from '../../config/url';
 import { useTrackedStore } from '../../store/store';
 
 interface Prop {
@@ -42,7 +41,7 @@ const PostCardActions = ({ id, likes, comments }: Prop) => {
       isError: false,
       error: '',
     });
-    const res = await fetch(`${URL}posts/${id}/likes`, {
+    const res = await fetch(`${process.env.REACT_APP_URI}/posts/${id}/likes`, {
       method: method,
       headers: {
         Authorization: `Bearer ${state.token}`,

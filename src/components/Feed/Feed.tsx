@@ -1,4 +1,3 @@
-import { Container } from '@mui/material';
 import { Box } from '@mui/system';
 import { useRef } from 'react';
 import { useInfiniteQuery } from 'react-query';
@@ -12,24 +11,28 @@ const Feed = () => {
   const state = useTrackedStore();
 
   const fetchPosts = async ({ pageParam }: any) => {
-    const token = await state.token;
+    const token = state.token;
     let res: any;
     if (!pageParam) {
-      res = await fetch(`http://localhost:8000/posts`, {
+      res = await fetch(`${process.env.REACT_APP_URI}/posts/feed`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
     }
     if (pageParam) {
-      res = await fetch(`http://localhost:8000/posts?cursor=${pageParam}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      res = await fetch(
+        `${process.env.REACT_APP_URI}/posts/feed?cursor=${pageParam}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     }
     const data = await res.json();
     if (res.status === 401) {
+      state.logOut();
       return;
     }
     if (res.status !== 200 && res.status !== 201) {
