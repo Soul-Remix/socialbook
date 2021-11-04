@@ -9,9 +9,10 @@ const MainPage = () => {
   return (
     <Container
       sx={{
-        padding: 4,
+        padding: { xs: 0, sm: 4 },
         mr: { sm: 6, md: 8 },
         ml: { sm: 6, md: 8 },
+        mt: 2,
         position: 'relative',
       }}
     >

@@ -14,6 +14,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import RequestsPage from './pages/RequestsPage/RequestsPage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import { useTrackedStore } from './store/store';
+import PostPage from './pages/PostPage/PostPage';
 
 function App() {
   const state = useTrackedStore();
@@ -65,6 +66,9 @@ function App() {
           </Route>
           <Route path="/chat" exact>
             <ChatPage />
+          </Route>
+          <Route path="/post/:id" exact>
+            <PostPage />
           </Route>
           <RightSidebar />
           <MobileBottomNav />

@@ -15,7 +15,6 @@ import { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 import { useTrackedStore } from '../../store/store';
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 interface Prop {
   id: number;
@@ -30,8 +29,8 @@ const PostCardActions = ({ id, likes, comments }: Prop) => {
   const [likesArr, setLikesArr] = useState(likes);
 
   useEffect(() => {
-    setAlreadyLiked(likes.includes(state.user.id));
-  }, []);
+    setAlreadyLiked(likesArr.includes(state.user.id));
+  }, [likesArr, state.user.id]);
 
   const handleLike = async (method: string) => {
     const res = await fetch(`${process.env.REACT_APP_URI}/posts/${id}/likes`, {
@@ -46,11 +45,9 @@ const PostCardActions = ({ id, likes, comments }: Prop) => {
     }
     if (method === 'POST') {
       setLikesArr((old) => old.concat(state.user.id));
-      setAlreadyLiked(true);
     }
     if (method === 'DELETE') {
-      setLikesArr((old) => likesArr.filter((x) => x !== state.user.id));
-      setAlreadyLiked(false);
+      setLikesArr((old) => old.filter((x) => x !== state.user.id));
     }
     return data;
   };
