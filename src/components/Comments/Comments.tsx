@@ -5,6 +5,7 @@ import {
   Divider,
   Button,
   CircularProgress,
+  Card,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import dayjs from 'dayjs';
@@ -60,7 +61,7 @@ const Comments = (props: any) => {
     return comments.map((comment: any) => {
       const sameUser = state.user.id === comment.User.id;
       return (
-        <Box sx={{ mb: 2, border: 1, p: 1, borderColor: 'rgba(0,0,0,0.2)' }}>
+        <Card sx={{ mb: 2, p: 1 }} key={comment.id}>
           <Box
             sx={{ display: 'flex', alignItems: 'center', gap: '10px', mb: 0.5 }}
           >
@@ -97,7 +98,7 @@ const Comments = (props: any) => {
           </Box>
           <Divider />
           <Box sx={{ p: 2 }}>{comment.content}</Box>
-        </Box>
+        </Card>
       );
     });
   }

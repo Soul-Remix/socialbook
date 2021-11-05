@@ -15,6 +15,7 @@ import RequestsPage from './pages/RequestsPage/RequestsPage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import { useTrackedStore } from './store/store';
 import PostPage from './pages/PostPage/PostPage';
+import useWindowSize from './hooks/windowSize';
 
 function App() {
   const state = useTrackedStore();
@@ -28,6 +29,8 @@ function App() {
       }),
     [state.darkMode]
   );
+
+  const size = useWindowSize();
 
   useEffect(() => {
     if (state.expiry === null) {
@@ -46,9 +49,9 @@ function App() {
     return (
       <ThemeProvider theme={theme}>
         <NavBar />
-        <MobileDrawer />
+        {size.width < 900 && <MobileDrawer />}
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <PcDrawer />
+          {size.width >= 900 && <PcDrawer />}
           <Route path="/" exact>
             <Redirect to="/home" />
           </Route>
@@ -70,8 +73,8 @@ function App() {
           <Route path="/post/:id" exact>
             <PostPage />
           </Route>
-          <RightSidebar />
-          <MobileBottomNav />
+          {size.width >= 1200 && <RightSidebar />}
+          {size.width < 900 && <MobileBottomNav />}
         </Box>
       </ThemeProvider>
     );

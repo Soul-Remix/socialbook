@@ -84,11 +84,11 @@ const ProfileSettingsForm = (props: any) => {
 
   const formik = useFormik({
     initialValues: {
-      bio: bio,
-      country: country,
-      livesIn: livesIn,
-      gender: gender,
-      birthDate: birthDate,
+      bio: bio || '',
+      country: country || '',
+      livesIn: livesIn || '',
+      gender: gender || '',
+      birthDate: birthDate || '',
     },
     onSubmit: (values) => {
       mutation.mutate(values);

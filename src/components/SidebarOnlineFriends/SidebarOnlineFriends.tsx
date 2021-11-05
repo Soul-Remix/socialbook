@@ -87,6 +87,7 @@ const SidebarOnlineFriends = () => {
                       <Avatar
                         alt={`${x.firstName} ${x.lastName}`}
                         src={x.profilePicture}
+                        key={x.id}
                       />
                     );
                   })}

@@ -77,6 +77,7 @@ const Conversation = (props: any) => {
       queryClient.cancelQueries(`convo${convoId}`);
       const msg = {
         ...data,
+        id: Date.now(),
         senderId: state.user.id,
         createdAt: Date.now(),
         conversationId: convoId,
@@ -213,6 +214,7 @@ const Conversation = (props: any) => {
                       alignSelf: 'flex-end',
                     }}
                     ref={scrollRef}
+                    key={msg.id}
                   >
                     <Typography
                       sx={{
@@ -246,6 +248,7 @@ const Conversation = (props: any) => {
                       mb: '2px',
                     }}
                     ref={scrollRef}
+                    key={msg.id}
                   >
                     <Avatar
                       src={userQuery.data.profilePicture}
