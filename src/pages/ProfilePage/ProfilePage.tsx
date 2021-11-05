@@ -1,7 +1,7 @@
 import { Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import PostCard from '../../components/PostCard/PostCard';
 import PostSkeleton from '../../components/skeletons/PostSkeleton/PostSkeleton';
@@ -19,9 +19,10 @@ import fetchUserPosts from '../../utils/fetchUserPosts';
 const ProfilePage = () => {
   const { id }: any = useParams();
   const state = useTrackedStore();
+  const history = useHistory();
 
   const userQuery = useQuery(`user${id}`, () =>
-    fetchUser(state.token, id, state.logOut)
+    fetchUser(state.token, id, state.logOut, history)
   );
   const friendsQuery = useQuery(`friends${id}`, () =>
     fetchFriends(state.token, id, state.logOut)

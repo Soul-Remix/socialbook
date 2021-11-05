@@ -110,7 +110,7 @@ const Conversation = (props: any) => {
     fetchConvo(state.token, convoId, state.logOut)
   );
   const userQuery = useQuery(`user${userId}`, () =>
-    fetchUser(state.token, userId, state.logOut)
+    fetchUser(state.token, userId, state.logOut, history)
   );
 
   useEffect(() => {

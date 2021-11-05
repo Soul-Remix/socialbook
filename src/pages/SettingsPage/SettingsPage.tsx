@@ -2,6 +2,7 @@ import { Container, Tab, Tabs } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { useHistory } from 'react-router';
 import AccountSettingsForm from '../../components/AccountSettingsForm/AccountSettingsForm';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import ProfileSettingsForm from '../../components/ProfileSettingsForm/ProfileSettingsForm';
@@ -30,13 +31,14 @@ const SettingsPage = () => {
   const [value, setValue] = useState(0);
   const state = useTrackedStore();
   const id = state.user.id;
+  const history = useHistory();
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
   };
 
   const { data, isLoading, isError, error } = useQuery(`user${id}`, () =>
-    fetchUser(state.token, id, state.logOut)
+    fetchUser(state.token, id, state.logOut, history)
   );
 
   return (

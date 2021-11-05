@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect, useMemo } from 'react';
-import { Redirect, Route } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import MobileBottomNav from './components/MobileBottomNav/MobileBottomNav';
 import MobileDrawer from './components/MobileDrawer/MobileDrawer';
 import NavBar from './components/NavBar/NavBar';
@@ -16,6 +16,7 @@ import SettingsPage from './pages/SettingsPage/SettingsPage';
 import { useTrackedStore } from './store/store';
 import PostPage from './pages/PostPage/PostPage';
 import useWindowSize from './hooks/windowSize';
+import NoMatch from './pages/NoMatch/NoMatch';
 
 function App() {
   const state = useTrackedStore();
@@ -52,27 +53,32 @@ function App() {
         {size.width < 900 && <MobileDrawer />}
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           {size.width >= 900 && <PcDrawer />}
-          <Route path="/" exact>
-            <Redirect to="/home" />
-          </Route>
-          <Route path="/home" exact>
-            <MainPage />
-          </Route>
-          <Route path="/profile/:id" exact>
-            <ProfilePage />
-          </Route>
-          <Route path="/settings" exact>
-            <SettingsPage />
-          </Route>
-          <Route path="/requests" exact>
-            <RequestsPage />
-          </Route>
-          <Route path="/chat" exact>
-            <ChatPage />
-          </Route>
-          <Route path="/post/:id" exact>
-            <PostPage />
-          </Route>
+          <Switch>
+            <Route path="/" exact>
+              <Redirect to="/home" />
+            </Route>
+            <Route path="/home" exact>
+              <MainPage />
+            </Route>
+            <Route path="/profile/:id" exact>
+              <ProfilePage />
+            </Route>
+            <Route path="/settings" exact>
+              <SettingsPage />
+            </Route>
+            <Route path="/requests" exact>
+              <RequestsPage />
+            </Route>
+            <Route path="/chat" exact>
+              <ChatPage />
+            </Route>
+            <Route path="/post/:id" exact>
+              <PostPage />
+            </Route>
+            <Route>
+              <NoMatch />
+            </Route>
+          </Switch>
           {size.width >= 1200 && <RightSidebar />}
           {size.width < 900 && <MobileBottomNav />}
         </Box>

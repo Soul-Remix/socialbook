@@ -1,4 +1,9 @@
-const fetchPost = async (token: string, id: string, logOut: () => void) => {
+const fetchPost = async (
+  token: string,
+  id: string,
+  logOut: () => void,
+  history: any
+) => {
   const res = await fetch(`${process.env.REACT_APP_URI}/posts/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -7,6 +12,10 @@ const fetchPost = async (token: string, id: string, logOut: () => void) => {
   const data = await res.json();
   if (res.status === 401) {
     logOut();
+    return;
+  }
+  if (res.status === 404) {
+    history.push('/404');
     return;
   }
   if (res.status !== 200 && res.status !== 201) {
