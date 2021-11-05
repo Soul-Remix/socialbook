@@ -17,6 +17,7 @@ import { useTrackedStore } from './store/store';
 import PostPage from './pages/PostPage/PostPage';
 import useWindowSize from './hooks/windowSize';
 import NoMatch from './pages/NoMatch/NoMatch';
+import SearchPage from './pages/SearchPage/SearchPage';
 
 function App() {
   const state = useTrackedStore();
@@ -74,6 +75,9 @@ function App() {
             </Route>
             <Route path="/post/:id" exact>
               <PostPage />
+            </Route>
+            <Route path="/search" exact>
+              <SearchPage />
             </Route>
             <Route>
               <NoMatch />

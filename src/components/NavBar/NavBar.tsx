@@ -7,8 +7,10 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
+import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('form')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -51,6 +53,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavBar = (props: any) => {
+  const history = useHistory();
+  const [search, setSearch] = useState('');
+  const handleChange = (e: any) => {
+    setSearch(e.target.value);
+  };
   return (
     <>
       <CssBaseline />
@@ -64,11 +71,19 @@ const NavBar = (props: any) => {
           >
             Socialbook
           </Typography>
-          <Search>
+          <Search
+            onSubmit={(e) => {
+              e.preventDefault();
+              history.push(`/search?q=${search}`);
+              setSearch('');
+            }}
+          >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              value={search}
+              onChange={handleChange}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />

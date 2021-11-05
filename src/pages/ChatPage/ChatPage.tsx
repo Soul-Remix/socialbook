@@ -69,7 +69,7 @@ const ChatPage = () => {
         </Box>
       )}
       {data && !startConvo && (
-        <>
+        <Box sx={{ p: 4 }}>
           <Typography variant="h4">Chat</Typography>
           <Box>
             {data.map((x: any) => {
@@ -126,7 +126,7 @@ const ChatPage = () => {
               );
             })}
           </Box>
-        </>
+        </Box>
       )}
       {startConvo && convoId && (
         <Conversation
