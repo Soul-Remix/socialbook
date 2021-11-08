@@ -9,7 +9,7 @@ import { Box } from '@mui/system';
 import { Search } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useHistory, useLocation, useParams } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { useEffect } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useTrackedStore } from '../../store/store';

@@ -31,7 +31,10 @@ const WebsocketProvider: FunctionComponent<{ children: ReactNode }> = ({
 
   useEffect(() => {
     try {
-      const socketConnection = io('http://localhost:8000', options);
+      const socketConnection = io(
+        'https://social-book-api.herokuapp.com',
+        options
+      );
       setConnection(socketConnection);
     } catch (err) {
       console.log(err);

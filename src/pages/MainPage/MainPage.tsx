@@ -13,6 +13,7 @@ const MainPage = () => {
         mr: { sm: 6, md: 8 },
         ml: { sm: 6, md: 8 },
         mt: 2,
+        mb: 5,
         position: 'relative',
       }}
     >

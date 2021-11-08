@@ -118,23 +118,7 @@ const Conversation = (props: any) => {
   }, [convoQuery.data]);
 
   return (
-    <Box>
-      <Button
-        sx={{
-          width: '100%',
-          color: 'text.secondary',
-          display: 'flex',
-          justifyContent: 'flex-start',
-          pt: 1,
-          pb: 1,
-        }}
-        onClick={() => {
-          setConvoId(null);
-          setStartConvo(false);
-        }}
-      >
-        <ArrowBack />
-      </Button>
+    <Box sx={{ height: '100%' }}>
       {(userQuery.isError || convoQuery.isError) && (
         <ErrorMessage message={userQuery.error || convoQuery.error} />
       )}
@@ -151,47 +135,70 @@ const Conversation = (props: any) => {
         </Box>
       )}
       {userQuery.data && convoQuery.data && (
-        <Button
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'auto 1fr',
-            gap: '15px',
-            textTransform: 'initial',
-            width: '100%',
-            textAlign: 'left',
-          }}
-          onClick={() => {
-            history.push(`/profile/${userQuery.data.id}`);
-          }}
-          variant="contained"
-        >
-          <Avatar
-            src={userQuery.data.profilePicture}
-            sx={{ width: '50px', height: '50px' }}
-          />
-          <Box>
-            <Typography sx={{ fontWeight: '700' }}>
-              {userQuery.data.firstName} {userQuery.data.lastName}
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: '0.9rem',
-              }}
-            >
-              {userQuery.data.isOnline
-                ? 'Online'
-                : `Last Seen ${dayjs(userQuery.data.updatedAt).fromNow()}`}
-            </Typography>
-          </Box>
-        </Button>
+        <Box sx={{ display: 'flex' }}>
+          <Button
+            sx={{
+              color: 'text.secondary',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+            onClick={() => {
+              setConvoId(null);
+              setStartConvo(false);
+            }}
+          >
+            <ArrowBack />
+          </Button>
+
+          <Button
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              textTransform: 'initial',
+              width: '100%',
+              textAlign: 'left',
+            }}
+            onClick={() => {
+              history.push(`/profile/${userQuery.data.id}`);
+            }}
+            variant="contained"
+          >
+            <Avatar
+              src={userQuery.data.profilePicture}
+              sx={{ width: '50px', height: '50px', mr: 2 }}
+            />
+            <Box>
+              <Typography sx={{ fontWeight: '700' }}>
+                {userQuery.data.firstName} {userQuery.data.lastName}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '0.9rem',
+                }}
+              >
+                {userQuery.data.isOnline
+                  ? 'Online'
+                  : `Last Seen ${dayjs(userQuery.data.updatedAt).fromNow()}`}
+              </Typography>
+            </Box>
+          </Button>
+        </Box>
       )}
       <Divider />
       {userQuery.data && convoQuery.data && (
         <>
           <Box
             sx={{
-              minHeight: 'calc(100vh - 280px)',
-              maxHeight: 'calc(100vh - 280px)',
+              minHeight: {
+                xs: 'calc(100vh - 288px)',
+                sm: 'calc(100vh - 340px)',
+                md: 'calc(100vh - 288px)',
+              },
+              maxHeight: {
+                xs: 'calc(100vh - 288px)',
+                sm: 'calc(100vh - 340px)',
+                md: 'calc(100vh - 288px)',
+              },
               width: '100%',
               borderLeft: '1px solid',
               borderRight: '1px solid',

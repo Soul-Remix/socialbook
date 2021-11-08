@@ -38,6 +38,7 @@ const ProfilePage = () => {
         flexDirection: 'column',
         alignItems: 'center',
         mt: 4,
+        mb: 4,
         overflow: 'auto',
       }}
     >

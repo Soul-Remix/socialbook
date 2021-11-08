@@ -75,54 +75,51 @@ const ChatPage = () => {
             {data.map((x: any) => {
               const user = x.members.find((y: any) => y.id !== state.user.id);
               return (
-                <>
-                  <Button
-                    key={user.id}
-                    sx={{
-                      width: '100%',
-                      display: 'grid',
-                      gridTemplateColumns: 'auto 1fr',
-                      gap: '20px',
-                      mt: 2,
-                      p: 1,
-                      textTransform: 'initial',
-                    }}
-                    onClick={() => {
-                      setUser(user);
-                      setConvoId(x.id);
-                      setStartConvo(true);
-                    }}
-                  >
-                    {user.isOnline && (
-                      <StyledBadge
-                        overlap="circular"
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'right',
-                        }}
-                        variant="dot"
-                      >
-                        <Avatar
-                          alt={`${user.firstName} ${user.lastName}`}
-                          src={user.profilePicture}
-                          sx={{ width: '60px', height: '60px' }}
-                        />
-                      </StyledBadge>
-                    )}
-                    {!user.isOnline && (
+                <Button
+                  key={user.id}
+                  sx={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    mt: 2,
+                    p: 1,
+                    textTransform: 'initial',
+                  }}
+                  onClick={() => {
+                    setUser(user);
+                    setConvoId(x.id);
+                    setStartConvo(true);
+                  }}
+                >
+                  {user.isOnline && (
+                    <StyledBadge
+                      overlap="circular"
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                      }}
+                      variant="dot"
+                    >
                       <Avatar
                         alt={`${user.firstName} ${user.lastName}`}
                         src={user.profilePicture}
                         sx={{ width: '60px', height: '60px' }}
                       />
-                    )}
-                    <Box>
-                      <Typography sx={{ textAlign: 'left' }}>
-                        {user.firstName} {user.lastName}
-                      </Typography>
-                    </Box>
-                  </Button>
-                </>
+                    </StyledBadge>
+                  )}
+                  {!user.isOnline && (
+                    <Avatar
+                      alt={`${user.firstName} ${user.lastName}`}
+                      src={user.profilePicture}
+                      sx={{ width: '60px', height: '60px' }}
+                    />
+                  )}
+                  <Box>
+                    <Typography sx={{ textAlign: 'left', ml: 2 }}>
+                      {user.firstName} {user.lastName}
+                    </Typography>
+                  </Box>
+                </Button>
               );
             })}
           </Box>
