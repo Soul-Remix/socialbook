@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { useHistory } from 'react-router';
 import AccountSettingsForm from '../../components/AccountSettingsForm/AccountSettingsForm';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import PasswordChangeForm from '../../components/PasswordChangeForm/PasswordChangeForm';
 import ProfileSettingsForm from '../../components/ProfileSettingsForm/ProfileSettingsForm';
 import SettingsFormSkeleton from '../../components/skeletons/SettingsFormSkeleton/SettingsFormSkeleton';
 
@@ -59,7 +60,12 @@ const SettingsPage = () => {
         {isError && <ErrorMessage message={error} />}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {data && <AccountSettingsForm user={data} />}
+        {data && (
+          <>
+            <AccountSettingsForm user={data} />
+            <PasswordChangeForm />
+          </>
+        )}
       </TabPanel>
     </Container>
   );
