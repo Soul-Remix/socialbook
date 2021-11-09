@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router';
+import AccountDeleteBtn from '../../components/AccountDeleteBtn/AccountDeleteBtn';
 import AccountSettingsForm from '../../components/AccountSettingsForm/AccountSettingsForm';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import PasswordChangeForm from '../../components/PasswordChangeForm/PasswordChangeForm';
@@ -64,6 +65,7 @@ const SettingsPage = () => {
           <>
             <AccountSettingsForm user={data} />
             <PasswordChangeForm />
+            <AccountDeleteBtn />
           </>
         )}
       </TabPanel>
