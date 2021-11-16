@@ -145,6 +145,19 @@ const LoginForm = ({ showRegister }: props) => {
           >
             Create New Account
           </Button>
+          <Button
+            variant="contained"
+            sx={{ padding: 1, mt: 1, width: '100%' }}
+            color="secondary"
+            onClick={() => {
+              mutation.mutate({
+                email: 'testuser@test.com',
+                pass: 'testuser',
+              });
+            }}
+          >
+            Use Demo Account
+          </Button>
         </>
       )}
       {mutation.isLoading && <CircularProgress sx={{ mt: 2 }} />}
