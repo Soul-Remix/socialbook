@@ -33,18 +33,21 @@ const MobileBottomNav = () => {
           value="home"
           icon={<Home />}
           onClick={() => history.push('/home')}
+          sx={{ minWidth: '65px' }}
         />
         <BottomNavigationAction
           label="Profile"
           value="profile"
           icon={<Person />}
           onClick={() => history.push(`/profile/${state.user.id}`)}
+          sx={{ minWidth: '65px' }}
         />
         <BottomNavigationAction
           label="Chat"
           value="chat"
           icon={<Chat />}
           onClick={() => history.push('/chat')}
+          sx={{ minWidth: '65px' }}
         />
         <BottomNavigationAction
           label="Friends"
@@ -59,12 +62,14 @@ const MobileBottomNav = () => {
             </Badge>
           }
           onClick={() => history.push('/requests')}
+          sx={{ minWidth: '65px' }}
         />
         <BottomNavigationAction
           label="Settings"
           value="settings"
           icon={<Menu />}
           onClick={() => state.toggleDrawer()}
+          sx={{ minWidth: '65px' }}
         />
       </BottomNavigation>
     </Paper>
