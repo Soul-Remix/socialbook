@@ -5,7 +5,7 @@ import useIntersectionObserver from '../../hooks/useInterSectionObserver';
 import { useTrackedStore } from '../../store/store';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import PostCard from '../PostCard/PostCard';
-import PostSkeleton from '../skeletons/PostSkeleton/PostSkeleton';
+import PostSkeleton from '../Skeletons/PostSkeleton/PostSkeleton';
 
 const Feed = () => {
   const state = useTrackedStore();

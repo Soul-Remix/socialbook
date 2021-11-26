@@ -2,7 +2,7 @@ import { PhotoCamera } from '@mui/icons-material';
 import { Avatar, Badge, Button, Divider, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTrackedStore } from '../../store/store';
-import PPDialog from '../PPDialog/PPDialog';
+import ProfilePictureDialog from '../ProfilePictureDialog/ProfilePictureDialog';
 
 interface Props {
   id: number;
@@ -39,7 +39,7 @@ const ProfileAvatar = ({ id, userName, profilePicture, bio }: Props) => {
               }}
             />
           </Badge>
-          <PPDialog open={open} setOpen={setOpen} />
+          <ProfilePictureDialog open={open} setOpen={setOpen} />
         </>
       )}
       {state.user.id !== id && (

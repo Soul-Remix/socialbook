@@ -4,16 +4,16 @@ import { useQuery } from 'react-query';
 import { useHistory, useParams } from 'react-router';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import PostCard from '../../components/PostCard/PostCard';
-import PostSkeleton from '../../components/skeletons/PostSkeleton/PostSkeleton';
+import PostSkeleton from '../../components/Skeletons/PostSkeleton/PostSkeleton';
 import ProfileAvatar from '../../components/ProfileAvatar/ProfileAvatar';
 import ProfileFriendsCard from '../../components/ProfileFriendsCard/ProfileFriendsCard';
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo';
 import { useTrackedStore } from '../../store/store';
 import fetchFriends from '../../utils/fetchFriends';
 import fetchUser from '../../utils/fetchUser';
-import ProfileAvatarSkeleton from '../../components/skeletons/ProfileAvatarSkeleton/ProfileAvatarSkeleton';
-import ProfileInfoSkeleton from '../../components/skeletons/ProfileInfoSkeleton/ProfileInfoSkeleton';
-import ProfileFriendsCardSkeleton from '../../components/skeletons/ProfileFriendsCardSkeleton/ProfileFriendsCardSkeleton';
+import ProfileAvatarSkeleton from '../../components/Skeletons/ProfileAvatarSkeleton/ProfileAvatarSkeleton';
+import ProfileInfoSkeleton from '../../components/Skeletons/ProfileInfoSkeleton/ProfileInfoSkeleton';
+import ProfileFriendsCardSkeleton from '../../components/Skeletons/ProfileFriendsCardSkeleton/ProfileFriendsCardSkeleton';
 import fetchUserPosts from '../../utils/fetchUserPosts';
 
 const ProfilePage = () => {

@@ -1,7 +1,7 @@
 import { Drawer } from '@mui/material';
 import { Box } from '@mui/system';
-import SidebarFriends from '../SidebarFriends/SidebarFriends';
-import SidebarOnlineFriends from '../SidebarOnlineFriends/SidebarOnlineFriends';
+import SidebarFriends from './SidebarFriends/SidebarFriends';
+import SidebarOnlineFriends from './SidebarOnlineFriends/SidebarOnlineFriends';
 
 const RightSidebar = () => {
   return (

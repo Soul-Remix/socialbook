@@ -8,7 +8,7 @@ import AccountSettingsForm from '../../components/AccountSettingsForm/AccountSet
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import PasswordChangeForm from '../../components/PasswordChangeForm/PasswordChangeForm';
 import ProfileSettingsForm from '../../components/ProfileSettingsForm/ProfileSettingsForm';
-import SettingsFormSkeleton from '../../components/skeletons/SettingsFormSkeleton/SettingsFormSkeleton';
+import SettingsFormSkeleton from '../../components/Skeletons/SettingsFormSkeleton/SettingsFormSkeleton';
 
 import { useTrackedStore } from '../../store/store';
 import fetchUser from '../../utils/fetchUser';

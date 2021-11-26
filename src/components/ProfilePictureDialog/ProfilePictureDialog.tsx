@@ -17,7 +17,7 @@ import { storage } from '../../firebase/firebase';
 import { useTrackedStore } from '../../store/store';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
-const PPDialog = ({ open, setOpen }: any) => {
+const ProfilePictureDialog = ({ open, setOpen }: any) => {
   const [files, setFiles]: [any, any] = useState([]);
   const [error, setError]: [any, any] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -138,7 +138,7 @@ const PPDialog = ({ open, setOpen }: any) => {
             {isDragAccept && <p>file will be accepted</p>}
             {isDragReject && <p>file will be rejected</p>}
             {!isDragActive && (
-              <p>Drag 'n' drop you image here, or click to select your image</p>
+              <p>Click to select your image, or Drag 'n' drop you image here</p>
             )}
           </div>
           {files &&
@@ -189,4 +189,4 @@ const PPDialog = ({ open, setOpen }: any) => {
   );
 };
 
-export default PPDialog;
+export default ProfilePictureDialog;

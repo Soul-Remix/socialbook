@@ -11,11 +11,11 @@ import {
 import { styled } from '@mui/material/styles';
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router';
-import { useTrackedStore } from '../../store/store';
-import fetchOnlineFriends from '../../utils/fetchOnlineFriends';
+import { useTrackedStore } from '../../../store/store';
+import fetchOnlineFriends from '../../../utils/fetchOnlineFriends';
 
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import AvatarSkeleton from '../skeletons/AvatarSkeleton/AvatarSkeleton';
+import ErrorMessage from '../../ErrorMessage/ErrorMessage';
+import AvatarSkeleton from '../../Skeletons/AvatarSkeleton/AvatarSkeleton';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
