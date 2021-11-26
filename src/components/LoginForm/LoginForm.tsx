@@ -8,6 +8,7 @@ import {
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import { useMutation } from 'react-query';
+import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
 import { useTrackedStore } from '../../store/store';
@@ -37,6 +38,7 @@ interface loginType {
 
 const LoginForm = ({ showRegister }: props) => {
   let state = useTrackedStore();
+  const history = useHistory();
 
   // formik settings
   const formik = useFormik({
@@ -68,6 +70,7 @@ const LoginForm = ({ showRegister }: props) => {
       state.setUser(data.user);
       state.setExpiry();
       state.setToken(data.access_token);
+      history.push('/');
     },
   });
 

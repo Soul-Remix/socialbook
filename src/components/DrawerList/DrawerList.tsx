@@ -113,7 +113,13 @@ const DrawerList = ({ toggleDrawer }: Prop) => {
         </Collapse>
         <ListItemButton
           sx={{ ':hover': { color: 'error.main' } }}
-          onClick={state.logOut}
+          onClick={() => {
+            state.logOut();
+            state.setNavValue('main');
+            if (state.showDrawer === true) {
+              state.toggleDrawer();
+            }
+          }}
         >
           <ListItemIcon sx={{ minWidth: '40px', color: 'inherit' }}>
             <Logout />
