@@ -1,12 +1,6 @@
-import { Box } from '@mui/system';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect, useMemo } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
-import MobileBottomNav from './components/MobileBottomNav/MobileBottomNav';
-import MobileDrawer from './components/MobileDrawer/MobileDrawer';
-import NavBar from './components/NavBar/NavBar';
-import PcDrawer from './components/PcDrawer/PcDrawer';
-import RightSidebar from './components/RightSidebar/RightSidebar';
 import ChatPage from './pages/ChatPage/ChatPage';
 import { LoginPage } from './pages/Login/LoginPage';
 import MainPage from './pages/MainPage/MainPage';
@@ -15,10 +9,10 @@ import RequestsPage from './pages/RequestsPage/RequestsPage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import { useTrackedStore } from './store/store';
 import PostPage from './pages/PostPage/PostPage';
-import useWindowSize from './hooks/windowSize';
 import NoMatch from './pages/NoMatch/NoMatch';
 import SearchPage from './pages/SearchPage/SearchPage';
 import WebsocketProvider from './hooks/socket';
+import Layout from './components/Layout/Layout';
 
 function App() {
   const state = useTrackedStore();
@@ -32,8 +26,6 @@ function App() {
       }),
     [state.darkMode]
   );
-
-  const size = useWindowSize();
 
   useEffect(() => {
     if (state.expiry === null) {
@@ -52,10 +44,7 @@ function App() {
     return (
       <WebsocketProvider>
         <ThemeProvider theme={theme}>
-          <NavBar />
-          {size.width < 900 && <MobileDrawer />}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            {size.width >= 900 && <PcDrawer />}
+          <Layout>
             <Switch>
               <Route path="/" exact>
                 <Redirect to="/home" />
@@ -85,9 +74,7 @@ function App() {
                 <NoMatch />
               </Route>
             </Switch>
-            {size.width >= 1200 && <RightSidebar />}
-            {size.width < 900 && <MobileBottomNav />}
-          </Box>
+          </Layout>
         </ThemeProvider>
       </WebsocketProvider>
     );
