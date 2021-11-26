@@ -12,7 +12,6 @@ import { useMutation } from 'react-query';
 
 import { useTrackedStore } from '../../store/store';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { queryClient } from '../..';
 import { useState } from 'react';
 
 const AccountDeleteBtn = () => {
