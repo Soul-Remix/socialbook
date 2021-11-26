@@ -18,6 +18,7 @@ import PostPage from './pages/PostPage/PostPage';
 import useWindowSize from './hooks/windowSize';
 import NoMatch from './pages/NoMatch/NoMatch';
 import SearchPage from './pages/SearchPage/SearchPage';
+import WebsocketProvider from './hooks/socket';
 
 function App() {
   const state = useTrackedStore();
@@ -49,44 +50,46 @@ function App() {
   }
   if (state.user && state.token) {
     return (
-      <ThemeProvider theme={theme}>
-        <NavBar />
-        {size.width < 900 && <MobileDrawer />}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          {size.width >= 900 && <PcDrawer />}
-          <Switch>
-            <Route path="/" exact>
-              <Redirect to="/home" />
-            </Route>
-            <Route path="/home" exact>
-              <MainPage />
-            </Route>
-            <Route path="/profile/:id" exact>
-              <ProfilePage />
-            </Route>
-            <Route path="/settings" exact>
-              <SettingsPage />
-            </Route>
-            <Route path="/requests" exact>
-              <RequestsPage />
-            </Route>
-            <Route path="/chat" exact>
-              <ChatPage />
-            </Route>
-            <Route path="/post/:id" exact>
-              <PostPage />
-            </Route>
-            <Route path="/search" exact>
-              <SearchPage />
-            </Route>
-            <Route>
-              <NoMatch />
-            </Route>
-          </Switch>
-          {size.width >= 1200 && <RightSidebar />}
-          {size.width < 900 && <MobileBottomNav />}
-        </Box>
-      </ThemeProvider>
+      <WebsocketProvider>
+        <ThemeProvider theme={theme}>
+          <NavBar />
+          {size.width < 900 && <MobileDrawer />}
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            {size.width >= 900 && <PcDrawer />}
+            <Switch>
+              <Route path="/" exact>
+                <Redirect to="/home" />
+              </Route>
+              <Route path="/home" exact>
+                <MainPage />
+              </Route>
+              <Route path="/profile/:id" exact>
+                <ProfilePage />
+              </Route>
+              <Route path="/settings" exact>
+                <SettingsPage />
+              </Route>
+              <Route path="/requests" exact>
+                <RequestsPage />
+              </Route>
+              <Route path="/chat" exact>
+                <ChatPage />
+              </Route>
+              <Route path="/post/:id" exact>
+                <PostPage />
+              </Route>
+              <Route path="/search" exact>
+                <SearchPage />
+              </Route>
+              <Route>
+                <NoMatch />
+              </Route>
+            </Switch>
+            {size.width >= 1200 && <RightSidebar />}
+            {size.width < 900 && <MobileBottomNav />}
+          </Box>
+        </ThemeProvider>
+      </WebsocketProvider>
     );
   } else {
     return null;
