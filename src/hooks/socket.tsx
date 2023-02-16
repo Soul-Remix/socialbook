@@ -6,9 +6,9 @@ import {
   useEffect,
   useMemo,
   useState,
-} from 'react';
-import io, { Socket } from 'socket.io-client';
-import { useTrackedStore } from '../store/store';
+} from "react";
+import io, { Socket } from "socket.io-client";
+import { useTrackedStore } from "../store/store";
 
 export const WebsocketContext = createContext<Socket | null>(null);
 
@@ -32,7 +32,7 @@ const WebsocketProvider: FunctionComponent<{ children: ReactNode }> = ({
   useEffect(() => {
     try {
       const socketConnection = io(
-        'https://social-book-api.herokuapp.com',
+        "https://socialbook-api-kteg.onrender.com",
         options
       );
       setConnection(socketConnection);
@@ -51,7 +51,7 @@ const WebsocketProvider: FunctionComponent<{ children: ReactNode }> = ({
 export const useWebsocket = (): Socket | null => {
   const ctx = useContext(WebsocketContext);
   if (ctx === undefined) {
-    throw new Error('useWebsocket can only be used inside WebsocketContext');
+    throw new Error("useWebsocket can only be used inside WebsocketContext");
   }
   return ctx;
 };
